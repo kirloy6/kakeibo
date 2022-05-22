@@ -4,7 +4,14 @@ public enum ForwardConst {
 
   //action
     ACT("action"),
-    ACT_TOP("Top");
+    ACT_TOP("Top"),
+
+  //command
+    CMD("command"),
+    CMD_NONE(""),
+
+    //jsp
+    FW_ERR_UNKNOWN("error/unknown");
 
     private final String text;
 

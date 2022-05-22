@@ -3,7 +3,15 @@ package constants;
 public enum AttributeConst {
 
     //フラッシュメッセージ
-    FLUSH("flush");
+    FLUSH("flush"),
+
+    //一覧画面共通
+    MAX_ROW("maxRow"),
+    PAGE("page"),
+
+  //入力フォーム共通
+    TOKEN("_token"),
+    ERR("errors");
 
 
     private final String text;
