@@ -9,6 +9,7 @@ import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.UserService;
 
 public class UserAction extends ActionBase {
@@ -70,6 +71,51 @@ public class UserAction extends ActionBase {
         //新規登録画面を表示
         forward(ForwardConst.FW_USER_NEW);
     }
+
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //パラメータの値を元に従業員情報のインスタンスを作成する
+            UserView uv = new UserView(
+                    null,
+                    getRequestParam(AttributeConst.USER_LOGIN_ID),
+                    getRequestParam(AttributeConst.USER_NAME),
+                    getRequestParam(AttributeConst.USER_PASS));
+
+
+            //従業員情報登録
+            List<String> errors = service.createUser(uv);
+
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.USER, uv); //入力された従業員情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_USER_NEW);
+
+            } else {
+                //登録中にエラーがなかった場合
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_USER, ForwardConst.CMD_INDEX);
+            }
+
+        }
+    }
+
 
 }
 

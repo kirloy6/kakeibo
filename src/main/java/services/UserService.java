@@ -1,9 +1,6 @@
 package services;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.NoResultException;
 
 import actions.views.UserConverter;
 import actions.views.UserView;
@@ -41,31 +38,7 @@ public class UserService extends ServiceBase {
         return empCount;
     }
 
-    /**
-     * 社員番号、パスワードを条件に取得したデータをEmployeeViewのインスタンスで返却する
-     * @param code 社員番号
-     * @param plainPass パスワード文字列
-     * @param pepper pepper文字列
-     * @return 取得データのインスタンス 取得できない場合null
-     */
-    public UserView findOne(String code, String plainPass, String pepper) {
-        User u = null;
-        try {
-            //パスワードのハッシュ化
-            String pass = EncryptUtil.getPasswordEncrypt(plainPass, pepper);
 
-            //社員番号とハッシュ化済パスワードを条件に未削除の従業員を1件取得する
-            u = em.createNamedQuery(JpaConst.Q_EMP_GET_BY_CODE_AND_PASS, User.class)
-                    .setParameter(JpaConst.JPQL_PARM_LOGIN_ID, login_id)
-                    .setParameter(JpaConst.JPQL_PARM_PASSWORD, pass)
-                    .getSingleResult();
-
-        } catch (NoResultException ex) {
-        }
-
-        return UserConverter.toView(u);
-
-    }
 
     /**
      * idを条件に取得したデータをEmployeeViewのインスタンスで返却する
@@ -77,19 +50,6 @@ public class UserService extends ServiceBase {
         return UserConverter.toView(u);
     }
 
-    /**
-     * 社員番号を条件に該当するデータの件数を取得し、返却する
-     * @param code 社員番号
-     * @return 該当するデータの件数
-     */
-    public long countByCode(String code) {
-
-        //指定した社員番号を保持する従業員の件数を取得する
-        long users_count = (long) em.createNamedQuery(JpaConst.Q_EMP_COUNT_RESISTERED_BY_CODE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_CODE, code)
-                .getSingleResult();
-        return users_count;
-    }
 
     /**
      * 画面から入力された従業員の登録内容を元にデータを1件作成し、従業員テーブルに登録する
@@ -97,16 +57,12 @@ public class UserService extends ServiceBase {
      * @param pepper pepper文字列
      * @return バリデーションや登録処理中に発生したエラーのリスト
      */
-    public List<String> create(UserView uv, String pepper) {
+    public List<String> createUser(UserView uv) {
 
         //パスワードをハッシュ化して設定
-        String pass = EncryptUtil.getPasswordEncrypt(uv.getPassword(), pepper);
+        String pass = uv.getPassword();
         uv.setPassword(pass);
 
-        //登録日時、更新日時は現在時刻を設定する
-        LocalDateTime now = LocalDateTime.now();
-        uv.setCreatedAt(now);
-        uv.setUpdatedAt(now);
 
         //登録内容のバリデーションを行う
         List<String> errors = UserValidator.validate(this, uv, true, true);
@@ -131,14 +87,14 @@ public class UserService extends ServiceBase {
         //idを条件に登録済みの従業員情報を取得する
         UserView savedEmp = findOne(uv.getId());
 
-        boolean validateCode = false;
-        if (!savedEmp.getCode().equals(uv.getCode())) {
+        boolean validateLogin_id = false;
+        if (!savedEmp.getLogin_id().equals(uv.getLogin_id())) {
             //社員番号を更新する場合
 
             //社員番号についてのバリデーションを行う
-            validateCode = true;
+            validateLogin_id = true;
             //変更後の社員番号を設定する
-            savedEmp.setCode(uv.getCode());
+            savedEmp.setLogin_id(uv.getLogin_id());
         }
 
         boolean validatePass = false;
@@ -148,20 +104,13 @@ public class UserService extends ServiceBase {
             //パスワードについてのバリデーションを行う
             validatePass = true;
 
-            //変更後のパスワードをハッシュ化し設定する
-            savedEmp.setPassword(
-                    EncryptUtil.getPasswordEncrypt(uv.getPassword(), pepper));
         }
 
         savedEmp.setName(uv.getName()); //変更後の氏名を設定する
-        savedEmp.setAdminFlag(uv.getAdminFlag()); //変更後の管理者フラグを設定する
 
-        //更新日時に現在時刻を設定する
-        LocalDateTime today = LocalDateTime.now();
-        savedEmp.setUpdatedAt(today);
 
         //更新内容についてバリデーションを行う
-        List<String> errors = UserValidator.validate(this, savedEmp, validateCode, validatePass);
+        List<String> errors = UserValidator.validate(this, savedEmp, validateLogin_id, validatePass);
 
         //バリデーションエラーがなければデータを更新する
         if (errors.size() == 0) {
@@ -172,50 +121,6 @@ public class UserService extends ServiceBase {
         return errors;
     }
 
-    /**
-     * idを条件に従業員データを論理削除する
-     * @param id
-     */
-    public void destroy(Integer id) {
-
-        //idを条件に登録済みの従業員情報を取得する
-        UserView savedEmp = findOne(id);
-
-        //更新日時に現在時刻を設定する
-        LocalDateTime today = LocalDateTime.now();
-        savedEmp.setUpdatedAt(today);
-
-        //論理削除フラグをたてる
-        savedEmp.setDeleteFlag(JpaConst.EMP_DEL_TRUE);
-
-        //更新処理を行う
-        update(savedEmp);
-
-    }
-
-    /**
-     * 社員番号とパスワードを条件に検索し、データが取得できるかどうかで認証結果を返却する
-     * @param code 社員番号
-     * @param plainPass パスワード
-     * @param pepper pepper文字列
-     * @return 認証結果を返却す(成功:true 失敗:false)
-     */
-    public Boolean validateLogin(String code, String plainPass, String pepper) {
-
-        boolean isValidEmployee = false;
-        if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {
-            UserView uv = findOne(code, plainPass, pepper);
-
-            if (uv != null && uv.getId() != null) {
-
-                //データが取得できた場合、認証成功
-                isValidEmployee = true;
-            }
-        }
-
-        //認証結果を返却する
-        return isValidEmployee;
-    }
 
     /**
      * idを条件にデータを1件取得し、Employeeのインスタンスで返却する
