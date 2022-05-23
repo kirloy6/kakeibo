@@ -2,16 +2,23 @@ package constants;
 
 public enum ForwardConst {
 
-  //action
+    //action
     ACT("action"),
     ACT_TOP("Top"),
+    ACT_USER("User"),
 
-  //command
+    //command
     CMD("command"),
     CMD_NONE(""),
+    CMD_SHOW("show"),
+    CMD_NEW("entryNew"),
+    CMD_INDEX("index"),
 
-    //jsp
-    FW_ERR_UNKNOWN("error/unknown");
+    ///jsp
+    FW_ERR_UNKNOWN("error/unknown"),
+    FW_TOP_INDEX("topPage/index"),
+    FW_LOGIN("login/login"),
+    FW_USER_INDEX("users/index");
 
     private final String text;
 
@@ -30,6 +37,3 @@ public enum ForwardConst {
     }
 
 }
-
-
-

@@ -17,7 +17,12 @@ import lombok.Setter;
 
 @Table(name = JpaConst.TABLE_USER)
 @NamedQueries({
-        @NamedQuery(name = "", query = ""),
+    @NamedQuery(
+            name=JpaConst.Q_USER_GET_ALL,
+            query = JpaConst.Q_USER_GET_ALL_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USER_COUNT,
+            query = JpaConst.Q_USER_COUNT_DEF)
 })
 
 @Getter

@@ -5,7 +5,13 @@ public enum MessageConst {
   //認証
     I_LOGINED("ログインしました"),
     E_LOGINED("ログインに失敗しました。"),
-    I_LOGOUT("ログアウトしました。");
+    I_LOGOUT("ログアウトしました。"),
+
+  //バリデーション
+    E_NONAME("氏名を入力してください。"),
+    E_NOPASSWORD("パスワードを入力してください。"),
+    E_NOEMP_LOGIN_ID("ログインidを入力してください。");
+
 
     private final String text;
 

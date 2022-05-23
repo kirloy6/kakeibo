@@ -11,7 +11,16 @@ public enum AttributeConst {
 
   //入力フォーム共通
     TOKEN("_token"),
-    ERR("errors");
+    ERR("errors"),
+
+  //従業員管理
+    USER("user"),
+    USERS("users"),
+    USER_COUNT("users_count"),
+    USER_ID("id"),
+    USER_LOGIN_ID("login_id"),
+    USER_PASS("password"),
+    USER_NAME("name");
 
 
     private final String text;
