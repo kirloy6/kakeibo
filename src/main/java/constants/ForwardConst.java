@@ -13,12 +13,14 @@ public enum ForwardConst {
     CMD_SHOW("show"),
     CMD_NEW("entryNew"),
     CMD_INDEX("index"),
+    CMD_CREATE("create"),
 
     ///jsp
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("topPage/index"),
     FW_LOGIN("login/login"),
-    FW_USER_INDEX("users/index");
+    FW_USER_INDEX("users/index"),
+    FW_USER_NEW("users/new");
 
     private final String text;
 
