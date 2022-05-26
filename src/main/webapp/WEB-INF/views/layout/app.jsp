@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
+
+
+<c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
+<c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
+<c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
+
+<c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,6 +25,9 @@
         <div id="header">
             <div id="header_menu">
                 <h1>家計簿</h1>
+            </div>
+            <div>
+            <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
         </div>
         <div id="content">${param.content}</div>
