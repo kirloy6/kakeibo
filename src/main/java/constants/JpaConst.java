@@ -14,7 +14,7 @@ public interface JpaConst {
     String USER_COL_ID = "id"; //id
     String USER_COL_LOGIN_ID = "login_id"; //社員番号
     String USER_COL_NAME = "name"; //氏名
-    String USER_COL_PASS = "password"; //パスワード
+    String USER_COL_PASS = "password";//パスワード
 
 
 
@@ -33,4 +33,11 @@ public interface JpaConst {
     //全ての従業員の件数を取得する
     String Q_USER_COUNT = ENTITY_USER + ".count";
     String Q_USER_COUNT_DEF = "SELECT COUNT(u) FROM User AS u";
+
+    String Q_USER_GET_BY_LOGIN_ID_AND_PASS = ENTITY_USER + ".getByLogin_idAndPass";
+    String Q_USER_GET_BY_LOGIN_ID_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.login_id = :" + JPQL_PARM_LOGIN_ID + " AND u.password = :" + JPQL_PARM_PASSWORD;
+
+    String Q_USER_COUNT_RESISTERED_BY_LOGIN_ID= ENTITY_USER + ".countRegisteredByLogin_id";
+    String Q_USER_COUNT_RESISTERED_BY_LOGIN_ID_DEF = "SELECT COUNT (u) FROM User AS u WHERE u.login_id = :" + JPQL_PARM_LOGIN_ID;
+
 }

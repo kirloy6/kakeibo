@@ -22,7 +22,15 @@ import lombok.Setter;
             query = JpaConst.Q_USER_GET_ALL_DEF),
     @NamedQuery(
             name = JpaConst.Q_USER_COUNT,
-            query = JpaConst.Q_USER_COUNT_DEF)
+            query = JpaConst.Q_USER_COUNT_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USER_COUNT_RESISTERED_BY_LOGIN_ID,
+            query = JpaConst.Q_USER_COUNT_RESISTERED_BY_LOGIN_ID_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USER_GET_BY_LOGIN_ID_AND_PASS,
+            query = JpaConst.Q_USER_GET_BY_LOGIN_ID_AND_PASS_DEF)
+
+
 })
 
 @Getter
@@ -43,7 +51,7 @@ public class User {
     /**
      * ログインid
      */
-    @Column(name = JpaConst.USER_COL_LOGIN_ID, nullable = false, unique = true)
+    @Column(name = JpaConst.USER_COL_LOGIN_ID, nullable = false)
     private String login_id;
 
     /**
@@ -57,5 +65,7 @@ public class User {
      */
     @Column(name = JpaConst.USER_COL_PASS, length = 64, nullable = false)
     private String password;
+
+
 
 }

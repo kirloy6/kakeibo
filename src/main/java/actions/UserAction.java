@@ -10,6 +10,7 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import constants.PropertyConst;
 import services.UserService;
 
 public class UserAction extends ActionBase {
@@ -89,9 +90,12 @@ public class UserAction extends ActionBase {
                     getRequestParam(AttributeConst.USER_NAME),
                     getRequestParam(AttributeConst.USER_PASS));
 
+          //アプリケーションスコープからpepper文字列を取得
+            String pepper = getContextScope(PropertyConst.PEPPER);
+
 
             //従業員情報登録
-            List<String> errors = service.createUser(uv);
+            List<String> errors = service.create(uv,pepper);
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合

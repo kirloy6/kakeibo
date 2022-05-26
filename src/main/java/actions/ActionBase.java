@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
+import constants.PropertyConst;
 
 /**
  * 各Actionクラスの親クラス。共通処理を行う。
@@ -228,6 +229,11 @@ public abstract class ActionBase {
      */
     protected void removeSessionScope(AttributeConst key) {
         request.getSession().removeAttribute(key.getValue());
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <R> R getContextScope(PropertyConst key) {
+        return (R) context.getAttribute(key.getValue());
     }
 
 

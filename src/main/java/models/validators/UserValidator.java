@@ -22,14 +22,15 @@ public class UserValidator {
      * @return エラーのリスト
      */
     public static List<String> validate(
-            UserService service, UserView uv, Boolean codeDuplicateCheckFlag, Boolean passwordCheckFlag) {
+            UserService service, UserView uv, Boolean login_idDuplicateCheckFlag, Boolean passwordCheckFlag) {
         List<String> errors = new ArrayList<String>();
-
-        //社員番号のチェック
-        String login_idError = validateLogin_id(uv.getLogin_id());
+      //社員番号のチェック
+        String login_idError = validateLogin_id(service, uv.getLogin_id(), login_idDuplicateCheckFlag);
         if (!login_idError.equals("")) {
             errors.add(login_idError);
         }
+
+
 
         //氏名のチェック
         String nameError = validateName(uv.getName());
@@ -46,19 +47,33 @@ public class UserValidator {
         return errors;
     }
 
+    private static String validateLogin_id(UserService service, String login_id, Boolean login_idDuplicateCheckFlag) {
 
-
-    private static String validateLogin_id(String login_id) {
-
+        //入力値がなければエラーメッセージを返却
         if (login_id == null || login_id.equals("")) {
             return MessageConst.E_NOUSER_LOGIN_ID.getMessage();
         }
 
-        //入力値がある場合は空文字を返却
+        if (login_idDuplicateCheckFlag) {
+            //社員番号の重複チェックを実施
+
+            long usersCount = isDuplicateUser(service, login_id);
+
+            //同一社員番号が既に登録されている場合はエラーメッセージを返却
+            if (usersCount > 0) {
+                return MessageConst.E_USER_LOGIN_ID_EXIST.getMessage();
+            }
+        }
+
+        //エラーがない場合は空文字を返却
         return "";
     }
 
+    private static long isDuplicateUser(UserService service, String login_id) {
 
+        long usersCount = service.countByLogin_id(login_id);
+        return usersCount;
+    }
 
     /**
      * 氏名に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
@@ -75,12 +90,6 @@ public class UserValidator {
         return "";
     }
 
-    /**
-     * パスワードの入力チェックを行い、エラーメッセージを返却
-     * @param password パスワード
-     * @param passwordCheckFlag パスワードの入力チェックを実施するかどうか(実施する:true 実施しない:false)
-     * @return エラーメッセージ
-     */
     private static String validatePassword(String password, Boolean passwordCheckFlag) {
 
         //入力チェックを実施 かつ 入力値がなければエラーメッセージを返却
@@ -91,4 +100,9 @@ public class UserValidator {
         //エラーがない場合は空文字を返却
         return "";
     }
+
+
+
+
+
 }

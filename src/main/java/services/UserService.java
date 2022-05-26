@@ -2,11 +2,14 @@ package services;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import actions.views.UserConverter;
 import actions.views.UserView;
 import constants.JpaConst;
 import models.User;
 import models.validators.UserValidator;
+import utils.EncryptUtil;
 
 /**
  * 従業員テーブルの操作に関わる処理を行うクラス
@@ -39,6 +42,27 @@ public class UserService extends ServiceBase {
     }
 
 
+    public UserView findOne(String login_id, String plainPass, String pepper) {
+        User u= null;
+        try {
+            //パスワードのハッシュ化
+            String pass = EncryptUtil.getPasswordEncrypt(plainPass, pepper);
+
+            //社員番号とハッシュ化済パスワードを条件に未削除の従業員を1件取得する
+            u = em.createNamedQuery(JpaConst.Q_USER_GET_BY_LOGIN_ID_AND_PASS, User.class)
+                    .setParameter(JpaConst.JPQL_PARM_LOGIN_ID, login_id)
+                    .setParameter(JpaConst.JPQL_PARM_PASSWORD, pass)
+                    .getSingleResult();
+
+        } catch (NoResultException ex) {
+        }
+
+        return UserConverter.toView(u);
+
+    }
+
+
+
 
     /**
      * idを条件に取得したデータをEmployeeViewのインスタンスで返却する
@@ -50,6 +74,15 @@ public class UserService extends ServiceBase {
         return UserConverter.toView(u);
     }
 
+    public long countByLogin_id(String login_id) {
+
+        //指定した社員番号を保持する従業員の件数を取得する
+        long users_count = (long) em.createNamedQuery(JpaConst.Q_USER_COUNT_RESISTERED_BY_LOGIN_ID, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_LOGIN_ID, login_id)
+                .getSingleResult();
+        return users_count;
+    }
+
 
     /**
      * 画面から入力された従業員の登録内容を元にデータを1件作成し、従業員テーブルに登録する
@@ -57,10 +90,10 @@ public class UserService extends ServiceBase {
      * @param pepper pepper文字列
      * @return バリデーションや登録処理中に発生したエラーのリスト
      */
-    public List<String> createUser(UserView uv) {
+    public List<String> create(UserView uv, String pepper) {
 
         //パスワードをハッシュ化して設定
-        String pass = uv.getPassword();
+        String pass = EncryptUtil.getPasswordEncrypt(uv.getPassword(), pepper);
         uv.setPassword(pass);
 
 
@@ -104,10 +137,12 @@ public class UserService extends ServiceBase {
             //パスワードについてのバリデーションを行う
             validatePass = true;
 
+            //変更後のパスワードをハッシュ化し設定する
+            savedEmp.setPassword(
+                    EncryptUtil.getPasswordEncrypt(uv.getPassword(), pepper));
         }
 
         savedEmp.setName(uv.getName()); //変更後の氏名を設定する
-
 
         //更新内容についてバリデーションを行う
         List<String> errors = UserValidator.validate(this, savedEmp, validateLogin_id, validatePass);
@@ -122,6 +157,22 @@ public class UserService extends ServiceBase {
     }
 
 
+  public Boolean validateLogin(String login_id, String plainPass, String pepper) {
+
+      boolean isValidUser = false;
+      if (login_id != null && !login_id.equals("") && plainPass != null && !plainPass.equals("")) {
+          UserView uv=findOne(login_id, plainPass, pepper);
+
+          if (uv != null && uv.getId() != null) {
+
+              //データが取得できた場合、認証成功
+              isValidUser = true;
+          }
+      }
+
+      //認証結果を返却する
+      return isValidUser;
+  }
     /**
      * idを条件にデータを1件取得し、Employeeのインスタンスで返却する
      * @param id

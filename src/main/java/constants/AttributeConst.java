@@ -1,6 +1,7 @@
 package constants;
 
 public enum AttributeConst {
+   
 
     //フラッシュメッセージ
     FLUSH("flush"),
@@ -12,6 +13,9 @@ public enum AttributeConst {
   //入力フォーム共通
     TOKEN("_token"),
     ERR("errors"),
+
+    LOGIN_USER("login_user"),
+    LOGIN_ERR("loginError"),
 
   //従業員管理
     USER("user"),
