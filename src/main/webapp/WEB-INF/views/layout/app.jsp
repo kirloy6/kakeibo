@@ -8,7 +8,8 @@
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="actUser" value="${ForwardConst.ACT_USER.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
-
+<c:set var="actRec" value="${ForwardConst.ACT_REC.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
 
 
@@ -27,7 +28,9 @@
                 <h1>家計簿</h1>
             </div>
             <div>
-            <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
+                <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">従業員管理</a>&nbsp;
+                <a href="<c:url value='?action=${actRec}&command=${commIdx}' />">日報管理</a>&nbsp;
+                <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
         </div>
         <div id="content">${param.content}</div>

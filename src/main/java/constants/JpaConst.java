@@ -16,10 +16,22 @@ public interface JpaConst {
     String USER_COL_NAME = "name"; //氏名
     String USER_COL_PASS = "password";//パスワード
 
+    //レコードテーブル
+    String TABLE_REC ="records";
+
+    String REC_COL_ID = "id"; //id
+    String REC_COL_USER = "user_id"; //日報を作成した従業員のid
+    String REC_COL_REC_DATE = "report_date"; //いつの日報かを示す日付
+    String REC_COL_TITLE = "title"; //日報のタイトル
+    String REC_COL_PRICE = "price"; //日報の内容
+    String REC_COL_CREATED_AT = "created_at"; //登録日時
+    String REC_COL_UPDATED_AT = "updated_at"; //更新日時
+
 
 
     //Entity名
     String ENTITY_USER = "user"; //ユーザー
+    String ENTITY_REC ="record";
 
     //JPQL内パラメータ
     String JPQL_PARM_LOGIN_ID = "login_id"; //ログインid
@@ -39,5 +51,13 @@ public interface JpaConst {
 
     String Q_USER_COUNT_RESISTERED_BY_LOGIN_ID= ENTITY_USER + ".countRegisteredByLogin_id";
     String Q_USER_COUNT_RESISTERED_BY_LOGIN_ID_DEF = "SELECT COUNT (u) FROM User AS u WHERE u.login_id = :" + JPQL_PARM_LOGIN_ID;
+
+  //全ての日報をidの降順に取得する
+    String Q_REC_GET_ALL = ENTITY_REC + ".getAll";
+    String Q_REC_GET_ALL_DEF = "SELECT r FROM Record AS r ORDER BY r.id DESC";
+
+    //指定した従業員が作成した日報を全件idの降順で取得する
+    String Q_REC_GET_ALL_MINE = ENTITY_REC + ".getAllMine";
+    String Q_REC_GET_ALL_MINE_DEF = "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARM_USER + " ORDER BY r.id DESC";
 
 }

@@ -7,6 +7,7 @@ public enum ForwardConst {
     ACT_TOP("Top"),
     ACT_USER("User"),
     ACT_AUTH("Auth"),
+    ACT_REC("Record"),
 
     //command
     CMD("command"),
@@ -23,7 +24,9 @@ public enum ForwardConst {
     FW_TOP_INDEX("topPage/index"),
     FW_LOGIN("login/login"),
     FW_USER_INDEX("users/index"),
-    FW_USER_NEW("users/new");
+    FW_USER_NEW("users/new"),
+    FW_REC_INDEX("records/index"),
+    FW_REC_NEW("records/new");
 
 
     private final String text;

@@ -1,7 +1,7 @@
 package constants;
 
 public enum AttributeConst {
-   
+
 
     //フラッシュメッセージ
     FLUSH("flush"),
@@ -24,7 +24,15 @@ public enum AttributeConst {
     USER_ID("id"),
     USER_LOGIN_ID("login_id"),
     USER_PASS("password"),
-    USER_NAME("name");
+    USER_NAME("name"),
+
+    //日報管理
+    RECORD("record"),
+    RECORDS("records"),
+    REC_ID("id"),
+    REC_DATE("record_date"),
+    REC_TITLE("title"),
+    REC_PRICE("price");
 
 
     private final String text;
