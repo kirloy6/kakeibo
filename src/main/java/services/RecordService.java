@@ -1,10 +1,14 @@
 package services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import actions.views.RecordConverter;
+import actions.views.RecordView;
 import constants.JpaConst;
 import models.Record;
 import models.User;
+import models.validators.RecordValidator;
 
 public class RecordService extends ServiceBase {
 
@@ -25,6 +29,90 @@ public class RecordService extends ServiceBase {
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
         return records;
+    }
+
+    /**
+     * idを条件に取得したデータをReportViewのインスタンスで返却する
+     * @param id
+     * @return 取得データのインスタンス
+     */
+    public RecordView findOne(int id) {
+        return RecordConverter.toView(findOneInternal(id));
+    }
+
+    /**
+     * 画面から入力された日報の登録内容を元にデータを1件作成し、日報テーブルに登録する
+     * @param rv 日報の登録内容
+     * @return バリデーションで発生したエラーのリスト
+     */
+    public List<String> create(RecordView rv) {
+        List<String> errors = RecordValidator.validate(rv);
+        if (errors.size() == 0) {
+            LocalDateTime ldt = LocalDateTime.now();
+            rv.setCreatedAt(ldt);
+            rv.setUpdatedAt(ldt);
+            createInternal(rv);
+        }
+
+        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
+
+    /**
+     * 画面から入力された日報の登録内容を元に、日報データを更新する
+     * @param rv 日報の更新内容
+     * @return バリデーションで発生したエラーのリスト
+     */
+    public List<String> update(RecordView rv) {
+
+        //バリデーションを行う
+        List<String> errors = RecordValidator.validate(rv);
+
+        if (errors.size() == 0) {
+
+            //更新日時を現在時刻に設定
+            LocalDateTime ldt = LocalDateTime.now();
+            rv.setUpdatedAt(ldt);
+
+            updateInternal(rv);
+        }
+
+        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
+
+    /**
+     * idを条件にデータを1件取得する
+     * @param id
+     * @return 取得データのインスタンス
+     */
+    private Record findOneInternal(int id) {
+        return em.find(Record.class, id);
+    }
+
+    /**
+     * 日報データを1件登録する ReportView→Report→DB
+     * @param rv 日報データ
+     */
+    private void createInternal(RecordView rv) {
+
+        em.getTransaction().begin();
+        em.persist(RecordConverter.toModel(rv));
+        em.getTransaction().commit();
+
+    }
+
+    /**
+     * 日報データを更新する
+     * @param rv 日報データ
+     */
+    private void updateInternal(RecordView rv) {
+
+        em.getTransaction().begin();
+        Record r = findOneInternal(rv.getId());
+        RecordConverter.copyViewToModel(r, rv);
+        em.getTransaction().commit();
+
     }
 
 

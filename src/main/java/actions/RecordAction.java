@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.RecordView;
+import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import models.Record;
 import services.RecordService;
 
@@ -66,6 +69,61 @@ public class RecordAction extends ActionBase {
 
     }
 
+    public void create() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //日報の日付が入力されていなければ、今日の日付を設定
+            LocalDate day = null;
+            if (getRequestParam(AttributeConst.REC_DATE) == null
+                    || getRequestParam(AttributeConst.REC_DATE).equals("")) {
+                day = LocalDate.now();
+            } else {
+                day = LocalDate.parse(getRequestParam(AttributeConst.REC_DATE));
+            }
+
+            //セッションからログイン中の従業員情報を取得
+            UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
+            //パラメータの値をもとに日報情報のインスタンスを作成する
+            RecordView rv = new RecordView(
+                    null,
+                    uv, //ログインしている従業員を、日報作成者として登録する
+                    day,
+                    getRequestParam(AttributeConst.REC_TITLE),
+                    toNumber(getRequestParam(AttributeConst.REC_PRICE)),
+                    null,
+                    null);
+
+            List<String> errors = service.create(rv);
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.RECORD, rv);//入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_REC_NEW);
+
+            } else {
+                //登録中にエラーがなかった場合
+
+
+
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+            }
+        }
+    }
 }
+
+
+
+
 
 

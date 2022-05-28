@@ -50,11 +50,9 @@ public class Record {
     @Column(name = JpaConst.REC_COL_REC_DATE, nullable = false)
     private LocalDate recordDate;
 
-    /**
-     * 日報のタイトル
-     */
-    @Column(name = JpaConst.REC_COL_TITLE, length = 255, nullable = false)
-    private String title;
+    @Column(name = JpaConst.REC_COL_TITLE, nullable = false)
+    private String title;;
+
 
     /**
      * 金額

@@ -18,8 +18,7 @@
         <table id="record_list">
             <tbody>
                 <tr>
-                    <th class="record_name">氏名</th>
-                    <th class="record_date">日付</th>
+                    <th class="report_title">タイトル</th>
                     <th class="record_price">金額</th>
                     <th class="record_action">操作</th>
                 </tr>
@@ -27,11 +26,12 @@
                     <fmt:parseDate value="${record.recordDate}" pattern="yyyy-MM-dd" var="recordDay" type="date" />
 
                     <tr class="row${status.count % 2}">
-                        <td class="record_name"><c:out value="${record.user.name}" /></td>
-                        <td class="record_date"><fmt:formatDate value='${recordDay}' pattern='yyyy-MM-dd' /></td>
+                        <td class="record_title">${record.title}</td>
                         <td class="record_price">${record.price}</td>
-                    </tr>
-                </c:forEach>
+                         <td class="report_action"><a href="<c:url value='?action=${actRec}&command=${comm}&id=${record.id}' />">編集する</a></td>
+                        </tr>
+                        </c:forEach>
+
             </tbody>
         </table>
 

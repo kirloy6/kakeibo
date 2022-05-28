@@ -26,7 +26,7 @@ public enum AttributeConst {
     USER_PASS("password"),
     USER_NAME("name"),
 
-    //日報管理
+
     RECORD("record"),
     RECORDS("records"),
     REC_ID("id"),
