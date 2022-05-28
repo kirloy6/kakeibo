@@ -51,7 +51,7 @@ public class Record {
     private LocalDate recordDate;
 
     @Column(name = JpaConst.REC_COL_TITLE, nullable = false)
-    private String title;;
+    private String title;
 
 
     /**

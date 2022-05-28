@@ -8,7 +8,7 @@
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-        <h2>レコード　新規登録ページ</h2>
+        <h2>固定費レコード　新規登録ページ</h2>
 
         <form method="POST" action="<c:url value='?action=${action}&command=${commCrt}' />">
             <c:import url="_form.jsp" />

@@ -19,6 +19,8 @@ public enum ForwardConst {
     CMD_LOGIN("login"),
     CMD_LOGOUT("logout"),
     CMD_SHOW_LOGIN("showLogin"),
+    CMD_EDIT("edit"),
+    CMD_UPDATE("update"),
     ///jsp
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("topPage/index"),
@@ -26,7 +28,8 @@ public enum ForwardConst {
     FW_USER_INDEX("users/index"),
     FW_USER_NEW("users/new"),
     FW_REC_INDEX("records/index"),
-    FW_REC_NEW("records/new");
+    FW_REC_NEW("records/new"),
+    FW_REC_EDIT("records/edit");
 
 
     private final String text;
