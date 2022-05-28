@@ -15,7 +15,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>レコード　一覧</h2>
+        <h2>固定費レコード　一覧</h2>
         <table id="record_list">
             <tbody>
                 <tr>
@@ -23,15 +23,20 @@
                     <th class="record_price">金額</th>
                     <th class="record_action">操作</th>
                 </tr>
+
+
+
                 <c:forEach var="record" items="${records}" varStatus="status">
                     <fmt:parseDate value="${record.recordDate}" pattern="yyyy-MM-dd" var="recordDay" type="date" />
-
                     <tr class="row${status.count % 2}">
+
+
                         <td class="record_title">${record.title}</td>
                         <td class="record_price">${record.price}</td>
                          <td class="report_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
                         </tr>
                         </c:forEach>
+
 
             </tbody>
         </table>

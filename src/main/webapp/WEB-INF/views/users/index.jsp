@@ -21,15 +21,11 @@
                 <tr>
                     <th>ログインID</th>
                     <th>氏名</th>
-                    <th>操作</th>
                 </tr>
                 <c:forEach var="user" items="${users}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${user.login_id}" /></td>
                         <td><c:out value="${user.name}" /></td>
-                        <td>
-                            <a href="<c:url value='?action=${actUser}&command=${commShow}&id=${user.id}' />">詳細を見る</a>
-                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

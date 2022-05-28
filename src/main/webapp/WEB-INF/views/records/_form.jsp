@@ -20,18 +20,15 @@
 <label for="name">氏名</label><br />
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
-<label for="固定費">固定費</label><br/>
-<label for="${AttributeConst.REC_TITLE.getValue()}"></label>
-<input type="text" name="${AttributeConst.REC_TITLE.getValue()}" value="家賃" />
+<p>固定費</p>
+<select name="title">
+   <c:forEach var="fixedTitle" items="${fixedTitles}">
+         <option value="${fixedTitle.title}">${fixedTitle.title}</option>
+    </c:forEach>
+ </select>
 
-<label for="${AttributeConst.REC_PRICE.getValue()}">金額</label>
-<input type="number" name="${AttributeConst.REC_PRICE.getValue()}" value="${record.price}" />
-<label for="${AttributeConst.REC_TITLE.getValue()}"></label>
-<br />
-<input type="text" name="${AttributeConst.REC_TITLE.getValue()}" value="ガス" />
 
-<label for="${AttributeConst.REC_PRICE.getValue()}">金額</label>
-<input type="number" name="${AttributeConst.REC_PRICE.getValue()}" value="${record.price}" />
+<input type="number" name="price" value="${record.price}" />
 <br/><br/>
 
 <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />

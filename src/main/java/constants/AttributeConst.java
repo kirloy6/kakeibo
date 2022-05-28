@@ -32,7 +32,10 @@ public enum AttributeConst {
     REC_ID("id"),
     REC_DATE("record_date"),
     REC_TITLE("title"),
-    REC_PRICE("price");
+    REC_PRICE("price"),
+
+    FIXEDTITLE("fixedTitle"),
+    FIXEDTITLES("fixedTitles");
 
 
     private final String text;

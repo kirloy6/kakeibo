@@ -6,6 +6,7 @@ import java.util.List;
 import actions.views.RecordConverter;
 import actions.views.RecordView;
 import constants.JpaConst;
+import models.FixedTitle;
 import models.Record;
 import models.User;
 import models.validators.RecordValidator;
@@ -114,6 +115,16 @@ public class RecordService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+
+    public List<FixedTitle> getAllPage(int page) {
+
+        List<FixedTitle> fixedTitles = em.createNamedQuery(JpaConst.Q_FIX_GET_ALL, FixedTitle.class)
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+        return fixedTitles;
+    }
+
 
 
 }

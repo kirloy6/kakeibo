@@ -12,6 +12,7 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.FixedTitle;
 import models.Record;
 import services.RecordService;
 
@@ -38,10 +39,11 @@ public class RecordAction extends ActionBase {
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
         List<Record> records = service.getAllPerPage(page);
+        List<FixedTitle> fixedTitles = service.getAllPage(page);
 
-
-        putRequestScope(AttributeConst.RECORDS, records); //取得した日報データ
-        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.FIXEDTITLES, fixedTitles);
+        putRequestScope(AttributeConst.RECORDS, records);
+        putRequestScope(AttributeConst.PAGE, page);
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
@@ -63,6 +65,10 @@ public class RecordAction extends ActionBase {
         Record r = new Record();
         r.setRecordDate(LocalDate.now());
         putRequestScope(AttributeConst.RECORD, r); //日付のみ設定済みの日報インスタンス
+
+        List<FixedTitle> fixedTitles = service.getAllPage(1);
+
+        putSessionScope(AttributeConst.FIXEDTITLES, fixedTitles);
 
         //新規登録画面を表示
         forward(ForwardConst.FW_REC_NEW);
@@ -121,6 +127,9 @@ public class RecordAction extends ActionBase {
         }
     }
 
+
+
+
         public void edit() throws ServletException, IOException {
 
             //idを条件に日報データを取得する
@@ -130,8 +139,6 @@ public class RecordAction extends ActionBase {
             UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
 
             if (rv == null || uv.getId() != rv.getUser().getId()) {
-                //該当の日報データが存在しない、または
-                //ログインしている従業員が日報の作成者でない場合はエラー画面を表示
                 forward(ForwardConst.FW_ERR_UNKNOWN);
 
             } else {
@@ -145,6 +152,44 @@ public class RecordAction extends ActionBase {
 
 
     }
+        public void update() throws ServletException, IOException {
+
+            //CSRF対策 tokenのチェック
+            if (checkToken()) {
+
+                //idを条件に日報データを取得する
+                RecordView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REC_ID)));
+
+                //入力された日報内容を設定する
+                rv.setRecordDate(toLocalDate(getRequestParam(AttributeConst.REC_DATE)));
+                rv.setTitle(getRequestParam(AttributeConst.REC_TITLE));
+                rv.setPrice(toNumber(getRequestParam(AttributeConst.REC_PRICE)));
+
+                //日報データを更新する
+                List<String> errors = service.update(rv);
+
+                if (errors.size() > 0) {
+                    //更新中にエラーが発生した場合
+
+                    putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                    putRequestScope(AttributeConst.RECORD, rv); //入力された日報情報
+                    putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                    //編集画面を再表示
+                    forward(ForwardConst.FW_REC_EDIT);
+                } else {
+                    //更新中にエラーがなかった場合
+
+                    //セッションに更新完了のフラッシュメッセージを設定
+                    putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                    //一覧画面にリダイレクト
+                    redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+
+                }
+            }
+        }
+
 
 
         }

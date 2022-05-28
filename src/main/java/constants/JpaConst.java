@@ -27,11 +27,17 @@ public interface JpaConst {
     String REC_COL_CREATED_AT = "created_at"; //登録日時
     String REC_COL_UPDATED_AT = "updated_at"; //更新日時
 
+    String TABLE_FIX ="fixedtitles";
+
+    String FIX_COL_ID = "id"; //id
+    String FIX_COL_TITLE = "fixedtitle";
+
 
 
     //Entity名
     String ENTITY_USER = "user"; //ユーザー
     String ENTITY_REC ="record";
+    String ENTITY_FIX ="fixedTitle";
 
     //JPQL内パラメータ
     String JPQL_PARM_LOGIN_ID = "login_id"; //ログインid
@@ -59,5 +65,8 @@ public interface JpaConst {
     //指定した従業員が作成した日報を全件idの降順で取得する
     String Q_REC_GET_ALL_MINE = ENTITY_REC + ".getAllMine";
     String Q_REC_GET_ALL_MINE_DEF = "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARM_USER + " ORDER BY r.id DESC";
+
+    String Q_FIX_GET_ALL = ENTITY_FIX + ".getAll";
+    String Q_FIX_GET_ALL_DEF = "SELECT f FROM FixedTitle AS f ORDER BY f.id ASC";
 
 }
