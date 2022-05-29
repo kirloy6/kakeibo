@@ -3,33 +3,33 @@ package services;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import actions.views.RecordConverter;
-import actions.views.RecordView;
+import actions.views.DailyRecordConverter;
+import actions.views.DailyRecordView;
 import constants.JpaConst;
-import models.FixedTitle;
-import models.Record;
+import models.DailyRecord;
+import models.Store;
 import models.User;
-import models.validators.RecordValidator;
+import models.validators.DailyRecordValidator;
 
-public class RecordService extends ServiceBase {
+public class DailyRecordService extends ServiceBase {
 
-    public List<Record> getMinePerPage(User user, int page) {
+    public List<DailyRecord> getMinePerPage(User user, int page) {
 
-        List<Record> records = em.createNamedQuery(JpaConst.Q_REC_GET_ALL_MINE, Record.class)
+        List<DailyRecord> dailyrecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_ALL_MINE, DailyRecord.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, user)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return records;
+        return dailyrecords;
     }
 
-    public List<Record> getAllPerPage(int page) {
+    public List<DailyRecord> getAllPerPage(int page) {
 
-        List<Record> records = em.createNamedQuery(JpaConst.Q_REC_GET_ALL, Record.class)
+        List<DailyRecord> dailyrecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_ALL, DailyRecord.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return records;
+        return dailyrecords;
     }
 
     /**
@@ -37,8 +37,8 @@ public class RecordService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    public RecordView findOne(int id) {
-        return RecordConverter.toView(findOneInternal(id));
+    public DailyRecordView findOne(int id) {
+        return DailyRecordConverter.toView(findOneInternal(id));
     }
 
     /**
@@ -46,13 +46,13 @@ public class RecordService extends ServiceBase {
      * @param rv 日報の登録内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> create(RecordView rv) {
-        List<String> errors = RecordValidator.validate(rv);
+    public List<String> create(DailyRecordView drv) {
+        List<String> errors = DailyRecordValidator.validate(drv);
         if (errors.size() == 0) {
             LocalDateTime ldt = LocalDateTime.now();
-            rv.setCreatedAt(ldt);
-            rv.setUpdatedAt(ldt);
-            createInternal(rv);
+            drv.setCreatedAt(ldt);
+            drv.setUpdatedAt(ldt);
+            createInternal(drv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -64,18 +64,18 @@ public class RecordService extends ServiceBase {
      * @param rv 日報の更新内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> update(RecordView rv) {
+    public List<String> update(DailyRecordView drv) {
 
         //バリデーションを行う
-        List<String> errors = RecordValidator.validate(rv);
+        List<String> errors = DailyRecordValidator.validate(drv);
 
         if (errors.size() == 0) {
 
             //更新日時を現在時刻に設定
             LocalDateTime ldt = LocalDateTime.now();
-            rv.setUpdatedAt(ldt);
+            drv.setUpdatedAt(ldt);
 
-            updateInternal(rv);
+            updateInternal(drv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -87,18 +87,18 @@ public class RecordService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    private Record findOneInternal(int id) {
-        return em.find(Record.class, id);
+    private DailyRecord findOneInternal(int id) {
+        return em.find(DailyRecord.class, id);
     }
 
     /**
      * 日報データを1件登録する ReportView→Report→DB
      * @param rv 日報データ
      */
-    private void createInternal(RecordView rv) {
+    private void createInternal(DailyRecordView drv) {
 
         em.getTransaction().begin();
-        em.persist(RecordConverter.toModel(rv));
+        em.persist(DailyRecordConverter.toModel(drv));
         em.getTransaction().commit();
 
     }
@@ -107,29 +107,29 @@ public class RecordService extends ServiceBase {
      * 日報データを更新する
      * @param rv 日報データ
      */
-    private void updateInternal(RecordView rv) {
+    private void updateInternal(DailyRecordView drv) {
 
         em.getTransaction().begin();
-        Record r = findOneInternal(rv.getId());
-        RecordConverter.copyViewToModel(r, rv);
+        DailyRecord dr = findOneInternal(drv.getId());
+        DailyRecordConverter.copyViewToModel(dr, drv);
         em.getTransaction().commit();
 
     }
 
-    public List<FixedTitle> getAllPage(int page) {
+    public List<Store> getAllPage(int page) {
 
-        List<FixedTitle> fixedTitles = em.createNamedQuery(JpaConst.Q_FIX_GET_ALL, FixedTitle.class)
+        List<Store> stores = em.createNamedQuery(JpaConst.Q_STORE_GET_ALL, Store.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return fixedTitles;
+        return stores;
     }
 
     public void destroy(int id) {
 
         em.getTransaction().begin();
-        Record r = findOneInternal(id);
-        em.remove(r);
+        DailyRecord dr = findOneInternal(id);
+        em.remove(dr);
         em.getTransaction().commit();
         em.close();
     }

@@ -39,9 +39,7 @@ public class RecordAction extends ActionBase {
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
         List<Record> records = service.getAllPerPage(page);
-        List<FixedTitle> fixedTitles = service.getAllPage(page);
 
-        putRequestScope(AttributeConst.FIXEDTITLES, fixedTitles);
         putRequestScope(AttributeConst.RECORDS, records);
         putRequestScope(AttributeConst.PAGE, page);
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
@@ -189,6 +187,25 @@ public class RecordAction extends ActionBase {
                 }
             }
         }
+
+        public void destroy() throws ServletException, IOException {
+            int id =toNumber(getRequestParam(AttributeConst.REC_ID));
+            service.destroy(id);
+/*
+            RecordView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REC_ID)));
+            Record r = RecordConverter.toModel(rv);
+*/
+
+
+
+
+            //セッションに登録完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+        }
+
 
 
 

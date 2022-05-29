@@ -35,7 +35,17 @@ public enum AttributeConst {
     REC_PRICE("price"),
 
     FIXEDTITLE("fixedTitle"),
-    FIXEDTITLES("fixedTitles");
+    FIXEDTITLES("fixedTitles"),
+
+    DAILYRECORD("dailyRecord"),
+    DAILYRECORDS("dailyRecords"),
+    DAILYREC_ID("id"),
+    DAILYREC_DATE("record_date"),
+    DAILYREC_TITLE("title"),
+    DAILYREC_PRICE("price"),
+
+    STORE("store"),
+    STORES("stores");
 
 
     private final String text;

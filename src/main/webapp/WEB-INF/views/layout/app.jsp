@@ -28,8 +28,8 @@
                 <h1>家計簿</h1>
             </div>
             <div>
-                <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">従業員管理</a>&nbsp;
-                <a href="<c:url value='?action=${actRec}&command=${commIdx}' />">日報管理</a>&nbsp;
+                <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">ユーザー管理</a>&nbsp;
+                <a href="<c:url value='?action=${actRec}&command=${commIdx}' />">レコード管理</a>&nbsp;
                 <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
         </div>

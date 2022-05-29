@@ -4,6 +4,7 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRec" value="${ForwardConst.ACT_REC.getValue()}" />
+<c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
@@ -41,7 +42,35 @@
             </tbody>
         </table>
 
-        <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規レコードの登録</a></p>
+        <h3>デイリーレコード　一覧</h3>
+        <table id="dailyRecord_list">
+            <tbody>
+                <tr>
+                    <th class="report_date">日付</th>
+                    <th class="report_store">ストア</th>
+                    <th class="record_price">金額</th>
+                    <th class="record_action">操作</th>
+                </tr>
+
+
+
+                <c:forEach var="dailyRecord" items="${dailyRecords}" varStatus="status">
+                    <fmt:parseDate value="${dailyRecord.recordDate}" pattern="yyyy-MM-dd" var="recordDay" type="date" />
+                    <tr class="row${status.count % 2}">
+
+                        <td class="repcord_date"><fmt:formatDate value='${recordDay}' pattern='yyyy-MM-dd' /></td>
+                        <td class="record_title">${dailyRecord.store}</td>
+                        <td class="record_price">${dallyRecord.price}</td>
+                        </tr>
+                        </c:forEach>
+
+
+            </tbody>
+        </table>
+
+
+        <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>
+        <p><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></p>
 
     </c:param>
 </c:import>

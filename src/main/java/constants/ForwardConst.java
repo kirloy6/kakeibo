@@ -8,6 +8,8 @@ public enum ForwardConst {
     ACT_USER("User"),
     ACT_AUTH("Auth"),
     ACT_REC("Record"),
+    ACT_DAILYREC("DailyRecord"),
+
 
     //command
     CMD("command"),
@@ -21,6 +23,7 @@ public enum ForwardConst {
     CMD_SHOW_LOGIN("showLogin"),
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
+    CMD_DESTROY("destroy"),
     ///jsp
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("topPage/index"),
@@ -29,7 +32,8 @@ public enum ForwardConst {
     FW_USER_NEW("users/new"),
     FW_REC_INDEX("records/index"),
     FW_REC_NEW("records/new"),
-    FW_REC_EDIT("records/edit");
+    FW_REC_EDIT("records/edit"),
+    FW_DAILYREC_NEW("dailyRecords/new");
 
 
     private final String text;

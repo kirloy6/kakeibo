@@ -32,12 +32,31 @@ public interface JpaConst {
     String FIX_COL_ID = "id"; //id
     String FIX_COL_TITLE = "fixedtitle";
 
+  //デイリーレコードテーブル
+    String TABLE_DAILYREC ="dailyrecords";
+
+    String DREC_COL_ID = "id"; //id
+    String DREC_COL_USER = "user_id"; //日報を作成した従業員のid
+    String DREC_COL_REC_DATE = "report_date"; //いつの日報かを示す日付
+    String DREC_COL_STORE = "store"; //日報のタイトル
+    String DREC_COL_PRICE = "price"; //日報の内容
+    String DREC_COL_CREATED_AT = "created_at"; //登録日時
+    String DREC_COL_UPDATED_AT = "updated_at"; //更新日時
+
+    String TABLE_STORE ="stores";
+
+    String STORE_COL_ID = "id"; //id
+    String STORE_COL_STORE = "store";
+
+
 
 
     //Entity名
     String ENTITY_USER = "user"; //ユーザー
     String ENTITY_REC ="record";
     String ENTITY_FIX ="fixedTitle";
+    String ENTITY_DAILYREC ="dailyrecord";
+    String ENTITY_STORE="store";
 
     //JPQL内パラメータ
     String JPQL_PARM_LOGIN_ID = "login_id"; //ログインid
@@ -68,5 +87,17 @@ public interface JpaConst {
 
     String Q_FIX_GET_ALL = ENTITY_FIX + ".getAll";
     String Q_FIX_GET_ALL_DEF = "SELECT f FROM FixedTitle AS f ORDER BY f.id ASC";
+
+  //全ての日報をidの降順に取得する
+    String Q_DAILYREC_GET_ALL = ENTITY_DAILYREC + ".getAll";
+    String Q_DAILYREC_GET_ALL_DEF = "SELECT d FROM DailyRecord AS d ORDER BY d.id DESC";
+
+    //指定した従業員が作成した日報を全件idの降順で取得する
+    String Q_DAILYREC_GET_ALL_MINE = ENTITY_DAILYREC + ".getAllMine";
+    String Q_DAILYREC_GET_ALL_MINE_DEF = "SELECT d FROM DailyRecord AS d WHERE d.user = :" + JPQL_PARM_USER + " ORDER BY d.id DESC";
+
+    String Q_STORE_GET_ALL = ENTITY_STORE + ".getAll";
+    String Q_STORE_GET_ALL_DEF = "SELECT s FROM Store AS s ORDER BY s.id ASC";
+
 
 }

@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -9,6 +10,10 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.MessageConst;
 import constants.PropertyConst;
+import models.FixedTitle;
+import models.Store;
+import services.DailyRecordService;
+import services.RecordService;
 import services.UserService;
 
 /**
@@ -18,6 +23,9 @@ import services.UserService;
 public class AuthAction extends ActionBase {
 
     private UserService service;
+    private RecordService rservice;
+    private DailyRecordService drservice;
+
 
     /**
      * メソッドを実行する
@@ -26,11 +34,16 @@ public class AuthAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         service = new UserService();
+        rservice = new RecordService();
+        drservice = new DailyRecordService();
 
         //メソッドを実行
         invoke();
 
         service.close();
+        rservice.close();
+        drservice.close();
+
     }
 
     /**
@@ -72,6 +85,13 @@ public class AuthAction extends ActionBase {
 
                 //ログインした従業員のDBデータを取得
                 UserView uv = service.findOne(login_id, plainPass,pepper);
+                List<FixedTitle> fixedTitles = rservice.getAllPage(1);
+
+                putSessionScope(AttributeConst.FIXEDTITLES, fixedTitles);
+                List<Store> stores = drservice.getAllPage(1);
+
+                putSessionScope(AttributeConst.STORES, stores);
+
                 //セッションにログインした従業員を設定
                 putSessionScope(AttributeConst.LOGIN_USER, uv);
                 //セッションにログイン完了のフラッシュメッセージを設定
