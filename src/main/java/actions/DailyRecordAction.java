@@ -146,7 +146,66 @@ public class DailyRecordAction extends ActionBase {
 
 }
 
+    public void update() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に日報データを取得する
+            DailyRecordView drv = service.findOne(toNumber(getRequestParam(AttributeConst.DAILYREC_ID)));
+
+            //入力された日報内容を設定する
+            drv.setRecordDate(toLocalDate(getRequestParam(AttributeConst.REC_DATE)));
+            drv.setStore(getRequestParam(AttributeConst.DAILYREC_STORE));
+            drv.setPrice(toNumber(getRequestParam(AttributeConst.DAILYREC_PRICE)));
+
+            //日報データを更新する
+            List<String> errors = service.update(drv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.DAILYRECORD, drv); //入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_DAILYREC_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+
+            }
+        }
+    }
+
+    public void destroy() throws ServletException, IOException {
+
+        int id =toNumber(getRequestParam(AttributeConst.DAILYREC_ID));
+        service.destroy(id);
+/*
+        RecordView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REC_ID)));
+        Record r = RecordConverter.toModel(rv);
+*/
 
 
 
-}
+
+        //セッションに登録完了のフラッシュメッセージを設定
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+        //一覧画面にリダイレクト
+        redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+    }
+
+
+
+
+    }
+
+
