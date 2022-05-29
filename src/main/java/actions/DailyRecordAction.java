@@ -123,4 +123,30 @@ public class DailyRecordAction extends ActionBase {
         }
     }
 
+    public void edit() throws ServletException, IOException {
+
+        //idを条件に日報データを取得する
+        DailyRecordView drv = service.findOne(toNumber(getRequestParam(AttributeConst.DAILYREC_ID)));
+
+        //セッションからログイン中の従業員情報を取得
+        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
+
+        if (drv == null || uv.getId() != drv.getUser().getId()) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.DAILYRECORD, drv); //取得した日報データ
+
+            //編集画面を表示
+            forward(ForwardConst.FW_DAILYREC_EDIT);
+        }
+
+
+}
+
+
+
+
 }
