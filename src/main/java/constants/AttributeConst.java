@@ -41,7 +41,7 @@ public enum AttributeConst {
     DAILYRECORDS("dailyRecords"),
     DAILYREC_ID("id"),
     DAILYREC_DATE("record_date"),
-    DAILYREC_TITLE("title"),
+    DAILYREC_STORE("store"),
     DAILYREC_PRICE("price"),
 
     STORE("store"),

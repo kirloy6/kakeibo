@@ -12,20 +12,26 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.DailyRecord;
 import models.FixedTitle;
 import models.Record;
+import services.DailyRecordService;
 import services.RecordService;
 
 public class RecordAction extends ActionBase {
 
     private RecordService service;
+    private DailyRecordService drservice;
+
     @Override
     public void process() throws ServletException, IOException {
 
         service=new RecordService();
+        drservice=new DailyRecordService();
 
         invoke();
         service.close();
+        drservice.close();
 
     }
 
@@ -39,7 +45,9 @@ public class RecordAction extends ActionBase {
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
         List<Record> records = service.getAllPerPage(page);
+        List<DailyRecord> dailyRecords = drservice.getAllPerPage(page);
 
+        putRequestScope(AttributeConst.DAILYRECORDS, dailyRecords);
         putRequestScope(AttributeConst.RECORDS, records);
         putRequestScope(AttributeConst.PAGE, page);
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数

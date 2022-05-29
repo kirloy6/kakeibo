@@ -60,7 +60,8 @@
 
                         <td class="repcord_date"><fmt:formatDate value='${recordDay}' pattern='yyyy-MM-dd' /></td>
                         <td class="record_title">${dailyRecord.store}</td>
-                        <td class="record_price">${dallyRecord.price}</td>
+                        <td class="record_price">${dailyRecord.price}</td>
+                        <td class="report_action"><a href="<c:url value='?action=${actDailyRec}&command=${commEdt}&id=${dailyRecord.id}' />">編集する</a></td>
                         </tr>
                         </c:forEach>
 

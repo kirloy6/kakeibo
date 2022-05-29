@@ -31,7 +31,7 @@
 <input type="number" name="price" value="${dailyRecord.price}" />
 <br/><br/>
 
-<input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${dailyRecord.id}" />
+<input type="hidden" name="${AttributeConst.DAILYREC_ID.getValue()}" value="${dailyRecord.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
 <button type="submit">投稿</button>
 
