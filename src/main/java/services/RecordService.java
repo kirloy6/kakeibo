@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -132,6 +133,18 @@ public class RecordService extends ServiceBase {
         em.remove(r);
         em.getTransaction().commit();
         em.close();
+    }
+
+
+    public List<Record> getNow(LocalDate start,LocalDate end) {
+
+        LocalDate ldt = LocalDate.now();
+
+        List<Record> nowRecords = em.createNamedQuery(JpaConst.Q_REC_GET_NOW, Record.class)
+                .setParameter("start" ,start)
+                .setParameter("end", end)
+                .getResultList();
+        return nowRecords;
     }
 
 

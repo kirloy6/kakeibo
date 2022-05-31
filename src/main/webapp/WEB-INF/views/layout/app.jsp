@@ -25,7 +25,7 @@
     <div id="wrapper">
         <div id="header">
             <div id="header_menu">
-                <h1>家計簿</h1>
+                <h1><a href="<c:url value='/?action=${actTop}&command=${commIdx}' />">家計簿</a></h1>&nbsp;&nbsp;&nbsp;
             </div>
             <div>
                 <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">ユーザー管理</a>&nbsp;

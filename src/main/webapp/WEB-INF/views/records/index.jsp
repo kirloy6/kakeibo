@@ -20,7 +20,7 @@
         <table id="record_list">
             <tbody>
                 <tr>
-                    <th class="report_title">タイトル</th>
+                    <th class="record_title">タイトル</th>
                     <th class="record_price">金額</th>
                     <th class="record_action">操作</th>
                 </tr>
@@ -34,9 +34,10 @@
 
                         <td class="record_title">${record.title}</td>
                         <td class="record_price">${record.price}</td>
-                         <td class="report_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
+                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
                         </tr>
                         </c:forEach>
+
 
 
             </tbody>
@@ -46,8 +47,8 @@
         <table id="dailyRecord_list">
             <tbody>
                 <tr>
-                    <th class="report_date">日付</th>
-                    <th class="report_store">ストア</th>
+                    <th class="record_date">日付</th>
+                    <th class="record_store">ストア</th>
                     <th class="record_price">金額</th>
                     <th class="record_action">操作</th>
                 </tr>
@@ -61,7 +62,7 @@
                         <td class="repcord_date"><fmt:formatDate value='${recordDay}' pattern='yyyy-MM-dd' /></td>
                         <td class="record_title">${dailyRecord.store}</td>
                         <td class="record_price">${dailyRecord.price}</td>
-                        <td class="report_action"><a href="<c:url value='?action=${actDailyRec}&command=${commEdt}&id=${dailyRecord.id}' />">編集する</a></td>
+                        <td class="record_action"><a href="<c:url value='?action=${actDailyRec}&command=${commEdt}&id=${dailyRecord.id}' />">編集する</a></td>
                         </tr>
                         </c:forEach>
 

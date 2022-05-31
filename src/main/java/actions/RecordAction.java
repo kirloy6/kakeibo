@@ -42,10 +42,15 @@ public class RecordAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
+
+
+
+
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
         List<Record> records = service.getAllPerPage(page);
         List<DailyRecord> dailyRecords = drservice.getAllPerPage(page);
+
 
         putRequestScope(AttributeConst.DAILYRECORDS, dailyRecords);
         putRequestScope(AttributeConst.RECORDS, records);
@@ -128,7 +133,7 @@ public class RecordAction extends ActionBase {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
             }
         }
     }

@@ -45,7 +45,9 @@ public enum AttributeConst {
     DAILYREC_PRICE("price"),
 
     STORE("store"),
-    STORES("stores");
+    STORES("stores"),
+
+    NOWRECORDS("nowRecords");
 
 
     private final String text;

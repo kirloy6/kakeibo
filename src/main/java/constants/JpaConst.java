@@ -21,7 +21,7 @@ public interface JpaConst {
 
     String REC_COL_ID = "id"; //id
     String REC_COL_USER = "user_id"; //日報を作成した従業員のid
-    String REC_COL_REC_DATE = "report_date"; //いつの日報かを示す日付
+    String REC_COL_REC_DATE = "record_date"; //いつの日報かを示す日付
     String REC_COL_TITLE = "title"; //日報のタイトル
     String REC_COL_PRICE = "price"; //日報の内容
     String REC_COL_CREATED_AT = "created_at"; //登録日時
@@ -37,7 +37,7 @@ public interface JpaConst {
 
     String DREC_COL_ID = "id"; //id
     String DREC_COL_USER = "user_id"; //日報を作成した従業員のid
-    String DREC_COL_REC_DATE = "report_date"; //いつの日報かを示す日付
+    String DREC_COL_REC_DATE = "record_date"; //いつの日報かを示す日付
     String DREC_COL_STORE = "store"; //日報のタイトル
     String DREC_COL_PRICE = "price"; //日報の内容
     String DREC_COL_CREATED_AT = "created_at"; //登録日時
@@ -62,6 +62,7 @@ public interface JpaConst {
     String JPQL_PARM_LOGIN_ID = "login_id"; //ログインid
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_USER = "user"; //ユーザー
+    String JPQL_PARM_TIME="time";
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -98,6 +99,11 @@ public interface JpaConst {
 
     String Q_STORE_GET_ALL = ENTITY_STORE + ".getAll";
     String Q_STORE_GET_ALL_DEF = "SELECT s FROM Store AS s ORDER BY s.id ASC";
+
+    String Q_REC_GET_NOW = ENTITY_REC + ".getNow";
+    String Q_REC_GET_NOW_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
+
+
 
 
 }
