@@ -136,15 +136,15 @@ public class RecordService extends ServiceBase {
     }
 
 
-    public List<Record> getNow(LocalDate start,LocalDate end) {
+    public List<Record> getMonth(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
-        List<Record> nowRecords = em.createNamedQuery(JpaConst.Q_REC_GET_MONTH, Record.class)
+        List<Record> monthRecords = em.createNamedQuery(JpaConst.Q_REC_GET_MONTH, Record.class)
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getResultList();
-        return nowRecords;
+        return monthRecords;
     }
 
 

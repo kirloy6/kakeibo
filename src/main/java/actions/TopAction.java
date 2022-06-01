@@ -55,12 +55,12 @@ public class TopAction extends ActionBase {
         LocalDate endDay = LocalDate.parse(end).withDayOfMonth(1).plusMonths(1).minusDays(1);
 
 
-        List<Record> nowRecords = service.getNow(toLocalDate(start),endDay);
+        List<Record> monthRecords = service.getMonth(toLocalDate(start),endDay);
 
 
 
 
-        putRequestScope(AttributeConst.NOWRECORDS, nowRecords);
+        putRequestScope(AttributeConst.MONTHRECORDS, monthRecords);
 
 
 

@@ -33,10 +33,10 @@
                     <th class="record_price">金額</th>
                     <th class="repcord_action">操作</th>
                 </tr>
-                <c:forEach var="nowRecord" items="${nowRecords}" varStatus="status">
+                <c:forEach var="monthRecord" items="${monthRecords}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td class="record_title"><c:out value="${nowRecord.title}" /></td>
-                        <td class="record_price">${nowRecord.price}</td>
+                        <td class="record_title"><c:out value="${monthRecord.title}" /></td>
+                        <td class="record_price">${monthRecord.price}</td>
                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${nowRecord.id}' />">編集する</a></td>
                     </tr>
                 </c:forEach>

@@ -47,7 +47,7 @@ public enum AttributeConst {
     STORE("store"),
     STORES("stores"),
 
-    NOWRECORDS("nowRecords");
+    MONTHRECORDS("monthRecords");
 
 
     private final String text;
