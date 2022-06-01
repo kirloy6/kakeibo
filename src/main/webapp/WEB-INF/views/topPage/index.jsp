@@ -38,13 +38,16 @@
                         <td class="record_title"><c:out value="${monthRecord.title}" /></td>
                         <td class="record_price">${monthRecord.price}</td>
                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${nowRecord.id}' />">編集する</a></td>
+
                     </tr>
+                    <td></td>
+                    <td class="total_price">合計金額:${sumRecord}</td>
                 </c:forEach>
 
             </tbody>
 
         </table>
-        <p>合計金額:${sumRecord}</p>
+
 
 
          <table id="record_list">
