@@ -30,7 +30,11 @@ import lombok.Setter;
             query = JpaConst.Q_REC_GET_ALL_MINE_DEF),
     @NamedQuery(
             name=JpaConst.Q_REC_GET_MONTH,
-            query = JpaConst.Q_REC_GET_MONTH_DEF)
+            query = JpaConst.Q_REC_GET_MONTH_DEF),
+    @NamedQuery(
+            name=JpaConst.Q_REC_SUM_MONTH,
+            query = JpaConst.Q_REC_SUM_MONTH_DEF)
+
 })
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)

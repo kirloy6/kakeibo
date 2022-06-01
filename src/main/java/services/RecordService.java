@@ -147,6 +147,17 @@ public class RecordService extends ServiceBase {
         return monthRecords;
     }
 
+    public long sumMonth(LocalDate start,LocalDate end) {
+
+        LocalDate ldt = LocalDate.now();
+
+        long sumRecords = em.createNamedQuery(JpaConst.Q_REC_SUM_MONTH, Long.class)
+                .setParameter("start" ,start)
+                .setParameter("end", end)
+                .getSingleResult();
+        return sumRecords;
+    }
+
 
 
 

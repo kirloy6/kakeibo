@@ -56,10 +56,11 @@ public class TopAction extends ActionBase {
 
 
         List<Record> monthRecords = service.getMonth(toLocalDate(start),endDay);
+        long sumRecord= service.sumMonth(toLocalDate(start),endDay);
 
 
 
-
+        putRequestScope(AttributeConst.SUMRECORD, sumRecord);
         putRequestScope(AttributeConst.MONTHRECORDS, monthRecords);
 
 

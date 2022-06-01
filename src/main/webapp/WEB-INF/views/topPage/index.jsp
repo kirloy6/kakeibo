@@ -40,8 +40,12 @@
                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${nowRecord.id}' />">編集する</a></td>
                     </tr>
                 </c:forEach>
+
             </tbody>
+
         </table>
+        <p>合計金額:${sumRecord}</p>
+
 
          <table id="record_list">
             <tbody>
@@ -63,6 +67,7 @@
                          <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
                         </tr>
                         </c:forEach>
+
 
 
 
