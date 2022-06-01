@@ -100,8 +100,8 @@ public interface JpaConst {
     String Q_STORE_GET_ALL = ENTITY_STORE + ".getAll";
     String Q_STORE_GET_ALL_DEF = "SELECT s FROM Store AS s ORDER BY s.id ASC";
 
-    String Q_REC_GET_NOW = ENTITY_REC + ".getNow";
-    String Q_REC_GET_NOW_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
+    String Q_REC_GET_MONTH = ENTITY_REC + ".getMonth";
+    String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
 
 
 
