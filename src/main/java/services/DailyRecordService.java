@@ -135,7 +135,7 @@ public class DailyRecordService extends ServiceBase {
         em.close();
     }
 
-    public List<DailyRecord> getMonth(LocalDate start,LocalDate end) {
+    public List<DailyRecord> getDailyMonth(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
@@ -146,7 +146,7 @@ public class DailyRecordService extends ServiceBase {
         return monthDailyRecords;
     }
 
-    public long sumMonth(LocalDate start,LocalDate end) {
+    public long sumDailyMonth(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 

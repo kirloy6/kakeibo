@@ -26,6 +26,7 @@
          <option value="${store.store}">${store.store}</option>
     </c:forEach>
  </select>
+"
 
 
 <input type="number" name="price" value="${dailyRecord.price}" />

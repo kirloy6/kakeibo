@@ -101,17 +101,17 @@ public interface JpaConst {
     String Q_STORE_GET_ALL_DEF = "SELECT s FROM Store AS s ORDER BY s.id ASC";
 
     String Q_REC_GET_MONTH = ENTITY_REC + ".getMonth";
-    String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
+    String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
     String Q_REC_SUM_MONTH = ENTITY_REC + ".sumMonth";
-    String Q_REC_SUM_MONTH_DEF = "SELECT SUM(r.price) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
+    String Q_REC_SUM_MONTH_DEF = "SELECT SUM(r.price) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
 
-    String Q_DAILYREC_GET_MONTH = ENTITY_DAILYREC + ".getMonth";
-    String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.id ASC";
+    String Q_DAILYREC_GET_MONTH = ENTITY_DAILYREC + ".getDailyMonth";
+    String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
 
-    String Q_DAILYREC_SUM_MONTH = ENTITY_DAILYREC + ".sumMonth";
-    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT SUM(d.price) FROM Record AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.id ASC";
+    String Q_DAILYREC_SUM_MONTH = ENTITY_DAILYREC + ".sumDailyMonth";
+    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT SUM(d.price) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
 
 
 

@@ -136,7 +136,7 @@ public class RecordService extends ServiceBase {
     }
 
 
-    public List<Record> getMonth(LocalDate start,LocalDate end) {
+    public List<Record> getMonthData(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 

@@ -60,12 +60,12 @@ public class TopAction extends ActionBase {
         LocalDate endDay = LocalDate.parse(end).withDayOfMonth(1).plusMonths(1).minusDays(1);
 
 
-        List<Record> monthRecords = service.getMonth(toLocalDate(start),endDay);
+        List<Record> monthRecords = service.getMonthData(toLocalDate(start),endDay);
         long sumRecord= service.sumMonth(toLocalDate(start),endDay);
 
 
-        List<DailyRecord> monthDailyRecords = dservice.getMonth(toLocalDate(start),endDay);
-        long sumDailyRecord= service.sumMonth(toLocalDate(start),endDay);
+        List<DailyRecord> monthDailyRecords = dservice.getDailyMonth(toLocalDate(start),endDay);
+        long sumDailyRecord= dservice.sumDailyMonth(toLocalDate(start),endDay);
 
 
 
