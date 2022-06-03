@@ -37,46 +37,52 @@
                     <tr class="row${status.count % 2}">
                         <td class="record_title"><c:out value="${monthRecord.title}" /></td>
                         <td class="record_price">${monthRecord.price}</td>
-                        <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${nowRecord.id}' />">編集する</a></td>
+                        <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${monthRecord.id}' />">編集する</a></td>
 
                     </tr>
-                    <td></td>
-                    <td class="total_price">合計金額:${sumRecord}</td>
+
                 </c:forEach>
 
             </tbody>
-
+            <tfoot>
+                <tr>
+                    <td>合計</td>
+                    <td class="total_price">${sumRecord}</td>
+                </tr>
+            </tfoot>
         </table>
 
 
-
-         <table id="record_list">
+ <h3>【今月のデイリーレコード　一覧】</h3>
+        <table id="record_list">
             <tbody>
                 <tr>
+                    <th class="record_date">日付</th>
                     <th class="record_title">タイトル</th>
                     <th class="record_price">金額</th>
-                    <th class="record_action">操作</th>
+                    <th class="repcord_action">操作</th>
                 </tr>
-
-
-
-                <c:forEach var="record" items="${records}" varStatus="status">
-                    <fmt:parseDate value="${record.recordDate}" pattern="yyyy-MM-dd" var="recordDay" type="date" />
+                <c:forEach var="monthDailyRecord" items="${monthDailyRecords}" varStatus="status">
+                <fmt:parseDate value="${monthDailyRecord.recordDate}" pattern="yyyy-MM-dd" var="dailyRecordDay" type="date" />
                     <tr class="row${status.count % 2}">
+                        <td class="record_date"><fmt:formatDate value='${dailyRecordDay}' pattern='yyyy-MM-dd' /></td>
+                        <td class="record_store"><c:out value="${monthDailyRecord.store}" /></td>
+                        <td class="record_price">${monthDailyRecord.price}</td>
+                        <td class="record_action"><a href="<c:url value='?action=${actDailyRec}&command=${commEdt}&id=${monthDailyRecord.id}' />">編集する</a></td>
 
+                    </tr>
 
-                        <td class="record_title">${record.title}</td>
-                        <td class="record_price">${record.price}</td>
-                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
-                        </tr>
-                        </c:forEach>
-
-
-
+                </c:forEach>
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>合計</td>
+                    <td class="total_price">${sumDailyRecord}</td>
+                </tr>
+            </tfoot>
         </table>
-
 
 
          <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>

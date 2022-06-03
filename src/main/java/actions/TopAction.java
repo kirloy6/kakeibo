@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
+import models.DailyRecord;
 import models.Record;
+import services.DailyRecordService;
 import services.RecordService;
 
 /**
@@ -19,6 +21,7 @@ import services.RecordService;
 public class TopAction extends ActionBase {
 
     private RecordService service;
+    private DailyRecordService dservice;
 
     /**
      * indexメソッドを実行する
@@ -27,11 +30,13 @@ public class TopAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         service = new RecordService();
+        dservice = new DailyRecordService();
 
         //メソッドを実行
         invoke();
 
         service.close();
+        dservice.close();
 
     }
 
@@ -59,9 +64,15 @@ public class TopAction extends ActionBase {
         long sumRecord= service.sumMonth(toLocalDate(start),endDay);
 
 
+        List<DailyRecord> monthDailyRecords = dservice.getMonth(toLocalDate(start),endDay);
+        long sumDailyRecord= service.sumMonth(toLocalDate(start),endDay);
+
+
 
         putRequestScope(AttributeConst.SUMRECORD, sumRecord);
         putRequestScope(AttributeConst.MONTHRECORDS, monthRecords);
+        putRequestScope(AttributeConst.SUMDAILYRECORD, sumDailyRecord);
+        putRequestScope(AttributeConst.MONTHDAILYRECORDS, monthDailyRecords);
 
 
 

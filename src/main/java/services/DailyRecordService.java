@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -133,6 +134,30 @@ public class DailyRecordService extends ServiceBase {
         em.getTransaction().commit();
         em.close();
     }
+
+    public List<DailyRecord> getMonth(LocalDate start,LocalDate end) {
+
+        LocalDate ldt = LocalDate.now();
+
+        List<DailyRecord> monthDailyRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_MONTH, DailyRecord.class)
+                .setParameter("start" ,start)
+                .setParameter("end", end)
+                .getResultList();
+        return monthDailyRecords;
+    }
+
+    public long sumMonth(LocalDate start,LocalDate end) {
+
+        LocalDate ldt = LocalDate.now();
+
+        long sumDailyRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_SUM_MONTH, Long.class)
+                .setParameter("start" ,start)
+                .setParameter("end", end)
+                .getSingleResult();
+        return sumDailyRecords;
+    }
+
+
 
 
 

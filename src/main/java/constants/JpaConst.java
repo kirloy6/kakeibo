@@ -107,6 +107,12 @@ public interface JpaConst {
     String Q_REC_SUM_MONTH_DEF = "SELECT SUM(r.price) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.id ASC";
 
 
+    String Q_DAILYREC_GET_MONTH = ENTITY_DAILYREC + ".getMonth";
+    String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.id ASC";
+
+    String Q_DAILYREC_SUM_MONTH = ENTITY_DAILYREC + ".sumMonth";
+    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT SUM(d.price) FROM Record AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.id ASC";
+
 
 
 }
