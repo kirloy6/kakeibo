@@ -21,12 +21,21 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>デイリーレコード</p>
+<input list="storeList" id="Id" name="store" />
+<datalist id="storeList">
 <select name="store">
    <c:forEach var="store" items="${stores}">
          <option value="${store.store}">${store.store}</option>
     </c:forEach>
  </select>
-"
+ </datalist>
+ <script>
+'use strcit';
+document.getElementById('Id').addEventListener('input', function handleInput (event) {
+  console.log(event.target.value);
+}, false);
+</script>
+
 
 
 <input type="number" name="price" value="${dailyRecord.price}" />
