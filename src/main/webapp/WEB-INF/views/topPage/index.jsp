@@ -85,7 +85,7 @@
         </table>
         <table>
             <tr>
-            <td>一人分</td>
+            <td>一人分 (固定費＋デイリーレコード合計)/2</td>
             <td>${totalOne}</td>
             </tr>
         </table>

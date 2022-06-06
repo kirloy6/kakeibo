@@ -24,6 +24,8 @@
             <button type="submit" >削除</button>
         </form>
 
+
+
         <p>
             <a href="<c:url value='?action=Record&command=index' />">一覧に戻る</a>
         </p>
