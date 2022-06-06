@@ -83,7 +83,12 @@
                 </tr>
             </tfoot>
         </table>
-
+        <table>
+            <tr>
+            <td>一人分</td>
+            <td>${totalOne}</td>
+            </tr>
+        </table>
 
          <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>
         <p><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></p>

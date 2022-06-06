@@ -67,12 +67,16 @@ public class TopAction extends ActionBase {
         List<DailyRecord> monthDailyRecords = dservice.getDailyMonth(toLocalDate(start),endDay);
         long sumDailyRecord= dservice.sumDailyMonth(toLocalDate(start),endDay);
 
+        long totalOne =(sumRecord+sumDailyRecord)/2;
+
+
 
 
         putRequestScope(AttributeConst.SUMRECORD, sumRecord);
         putRequestScope(AttributeConst.MONTHRECORDS, monthRecords);
         putRequestScope(AttributeConst.SUMDAILYRECORD, sumDailyRecord);
         putRequestScope(AttributeConst.MONTHDAILYRECORDS, monthDailyRecords);
+        request.setAttribute("totalOne", totalOne);
 
 
 
