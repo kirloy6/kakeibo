@@ -35,7 +35,8 @@ public enum ForwardConst {
     FW_REC_NEW("records/new"),
     FW_REC_EDIT("records/edit"),
     FW_DAILYREC_NEW("dailyRecords/new"),
-    FW_DAILYREC_EDIT("dailyRecords/edit");
+    FW_DAILYREC_EDIT("dailyRecords/edit"),
+    FW_DAILYREC_SPLIT("dailyRecords/split");
 
 
     private final String text;
