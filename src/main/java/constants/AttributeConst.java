@@ -50,7 +50,19 @@ public enum AttributeConst {
     MONTHRECORDS("monthRecords"),
     SUMRECORD("sumRecord"),
     MONTHDAILYRECORDS("monthDailyRecords"),
-    SUMDAILYRECORD("sumDailyRecord");
+    SUMDAILYRECORD("sumDailyRecord"),
+    MONTHDEMANDRECORDS("monthDemandRecords"),
+    SUMDEMANDRECORD("sumDemandRecord"),
+    YEARDAILYRECORDS("yearDailyRecords"),
+    SUMDAILYYEARRECORD("sumDailyYearRecord"),
+
+
+    DEMANDRECORD("demandRecord"),
+    DEMANDRECORDS("demandRecords"),
+    DEMANDREC_ID("id"),
+    DEMANDREC_DATE("record_date"),
+    DEMANDREC_STORE("store"),
+    DEMANDREC_PRICE("price");
 
 
     private final String text;

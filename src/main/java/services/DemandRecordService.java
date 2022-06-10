@@ -4,33 +4,33 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import actions.views.DailyRecordConverter;
-import actions.views.DailyRecordView;
+import actions.views.DemandRecordConverter;
+import actions.views.DemandRecordView;
 import constants.JpaConst;
-import models.DailyRecord;
+import models.DemandRecord;
 import models.Store;
 import models.User;
-import models.validators.DailyRecordValidator;
+import models.validators.DemandRecordValidator;
 
-public class DailyRecordService extends ServiceBase {
+public class DemandRecordService extends ServiceBase {
 
-    public List<DailyRecord> getMinePerPage(User user, int page) {
+    public List<DemandRecord> getMinePerPage(User user, int page) {
 
-        List<DailyRecord> dailyrecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_ALL_MINE, DailyRecord.class)
+        List<DemandRecord> demandrecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_GET_ALL_MINE, DemandRecord.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, user)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return dailyrecords;
+        return demandrecords;
     }
 
-    public List<DailyRecord> getAllPerPage(int page) {
+    public List<DemandRecord> getAllPerPage(int page) {
 
-        List<DailyRecord> dailyrecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_ALL, DailyRecord.class)
+        List<DemandRecord> demandrecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_GET_ALL, DemandRecord.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return dailyrecords;
+        return demandrecords;
     }
 
     /**
@@ -38,8 +38,8 @@ public class DailyRecordService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    public DailyRecordView findOne(int id) {
-        return DailyRecordConverter.toView(findOneInternal(id));
+    public DemandRecordView findOne(int id) {
+        return DemandRecordConverter.toView(findOneInternal(id));
     }
 
     /**
@@ -47,13 +47,13 @@ public class DailyRecordService extends ServiceBase {
      * @param rv 日報の登録内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> create(DailyRecordView drv) {
-        List<String> errors = DailyRecordValidator.validate(drv);
+    public List<String> create(DemandRecordView derv) {
+        List<String> errors = DemandRecordValidator.validate(derv);
         if (errors.size() == 0) {
             LocalDateTime ldt = LocalDateTime.now();
-            drv.setCreatedAt(ldt);
-            drv.setUpdatedAt(ldt);
-            createInternal(drv);
+            derv.setCreatedAt(ldt);
+            derv.setUpdatedAt(ldt);
+            createInternal(derv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -65,18 +65,18 @@ public class DailyRecordService extends ServiceBase {
      * @param rv 日報の更新内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> update(DailyRecordView drv) {
+    public List<String> update(DemandRecordView derv) {
 
         //バリデーションを行う
-        List<String> errors = DailyRecordValidator.validate(drv);
+        List<String> errors = DemandRecordValidator.validate(derv);
 
         if (errors.size() == 0) {
 
             //更新日時を現在時刻に設定
             LocalDateTime ldt = LocalDateTime.now();
-            drv.setUpdatedAt(ldt);
+            derv.setUpdatedAt(ldt);
 
-            updateInternal(drv);
+            updateInternal(derv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -88,18 +88,18 @@ public class DailyRecordService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    private DailyRecord findOneInternal(int id) {
-        return em.find(DailyRecord.class, id);
+    private DemandRecord findOneInternal(int id) {
+        return em.find(DemandRecord.class, id);
     }
 
     /**
      * 日報データを1件登録する ReportView→Report→DB
      * @param rv 日報データ
      */
-    private void createInternal(DailyRecordView drv) {
+    private void createInternal(DemandRecordView derv) {
 
         em.getTransaction().begin();
-        em.persist(DailyRecordConverter.toModel(drv));
+        em.persist(DemandRecordConverter.toModel(derv));
         em.getTransaction().commit();
 
     }
@@ -108,11 +108,11 @@ public class DailyRecordService extends ServiceBase {
      * 日報データを更新する
      * @param rv 日報データ
      */
-    private void updateInternal(DailyRecordView drv) {
+    private void updateInternal(DemandRecordView derv) {
 
         em.getTransaction().begin();
-        DailyRecord dr = findOneInternal(drv.getId());
-        DailyRecordConverter.copyViewToModel(dr, drv);
+        DemandRecord der = findOneInternal(derv.getId());
+        DemandRecordConverter.copyViewToModel(der, derv);
         em.getTransaction().commit();
 
     }
@@ -129,56 +129,34 @@ public class DailyRecordService extends ServiceBase {
     public void destroy(int id) {
 
         em.getTransaction().begin();
-        DailyRecord dr = findOneInternal(id);
-        em.remove(dr);
+        DemandRecord der = findOneInternal(id);
+        em.remove(der);
         em.getTransaction().commit();
         em.close();
     }
 
-    public List<DailyRecord> getDailyMonth(LocalDate start,LocalDate end) {
+    public List<DemandRecord> getDailyMonth(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
-        List<DailyRecord> monthDailyRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_MONTH, DailyRecord.class)
+        List<DemandRecord> monthDemandRecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_GET_MONTH, DemandRecord.class)
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getResultList();
-        return monthDailyRecords;
+        return monthDemandRecords;
     }
 
-    public long sumDailyMonth(LocalDate start,LocalDate end) {
+    public long sumDemandMonth(LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
-        long sumDailyRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_SUM_MONTH, Long.class)
+        long sumDemandRecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_SUM_MONTH, Long.class)
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getSingleResult();
-        return sumDailyRecords;
+        return sumDemandRecords;
     }
 
-
-    public List<DailyRecord> getDailyyear(LocalDate start,LocalDate end) {
-
-        LocalDate ldt = LocalDate.now();
-
-        List<DailyRecord> yearDailyRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_YEAR, DailyRecord.class)
-                .setParameter("start" ,start)
-                .setParameter("end", end)
-                .getResultList();
-        return yearDailyRecords;
-    }
-
-    public long sumDailyYear(LocalDate start,LocalDate end) {
-
-        LocalDate ldt = LocalDate.now();
-
-        long sumYearRecords = em.createNamedQuery(JpaConst.Q_DAILYREC_SUM_YEAR, Long.class)
-                .setParameter("start" ,start)
-                .setParameter("end", end)
-                .getSingleResult();
-        return sumYearRecords;
-    }
 
 
 

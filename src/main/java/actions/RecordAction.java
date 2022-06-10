@@ -13,25 +13,30 @@ import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import models.DailyRecord;
+import models.DemandRecord;
 import models.FixedTitle;
 import models.Record;
 import services.DailyRecordService;
+import services.DemandRecordService;
 import services.RecordService;
 
 public class RecordAction extends ActionBase {
 
     private RecordService service;
     private DailyRecordService drservice;
+    private DemandRecordService derservice;
 
     @Override
     public void process() throws ServletException, IOException {
 
         service=new RecordService();
         drservice=new DailyRecordService();
+        derservice=new DemandRecordService();
 
         invoke();
         service.close();
         drservice.close();
+        derservice.close();
 
     }
 
@@ -50,8 +55,9 @@ public class RecordAction extends ActionBase {
         int page = getPage();
         List<Record> records = service.getAllPerPage(page);
         List<DailyRecord> dailyRecords = drservice.getAllPerPage(page);
+        List<DemandRecord> demandRecords = derservice.getAllPerPage(page);
 
-
+        putRequestScope(AttributeConst.DEMANDRECORDS, demandRecords);
         putRequestScope(AttributeConst.DAILYRECORDS, dailyRecords);
         putRequestScope(AttributeConst.RECORDS, records);
         putRequestScope(AttributeConst.PAGE, page);

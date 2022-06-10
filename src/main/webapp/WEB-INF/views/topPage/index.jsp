@@ -5,6 +5,7 @@
 
 <c:set var="actRec" value="${ForwardConst.ACT_REC.getValue()}" />
 <c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
+<c:set var="actDeRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -83,15 +84,64 @@
                 </tr>
             </tfoot>
         </table>
-        <table>
+         <table>
             <tr>
-            <td>一人分 (固定費＋デイリーレコード合計)/2</td>
+            <td>年間トータル</td>
+            <td>${sumDailyYearRecord}</td>
+             <td>${monthRatio}%</td>
+            </tr>
+        </table>
+         <table>
+            <tr>
+            <td>一人分 (固定費＋デイリーレコード合計)/2)</td>
             <td>${totalOne}</td>
             </tr>
         </table>
+        <h3>【今月の立替レコード　一覧】</h3>
+        <table id="record_list">
+            <tbody>
+                <tr>
+                    <th class="record_date">日付</th>
+                    <th class="record_title">タイトル</th>
+                    <th class="record_price">金額</th>
+                    <th class="repcord_action">操作</th>
+                </tr>
+                <c:forEach var="monthDemandRecord" items="${monthDemandRecords}" varStatus="status">
+                <fmt:parseDate value="${monthDemandRecord.recordDate}" pattern="yyyy-MM-dd" var="demandRecordDay" type="date" />
+                    <tr class="row${status.count % 2}">
+                        <td class="record_date"><fmt:formatDate value='${demandRecordDay}' pattern='yyyy-MM-dd' /></td>
+                        <td class="record_store"><c:out value="${monthDemandRecord.store}" /></td>
+                        <td class="record_price">${monthDemandRecord.price}</td>
+                        <td class="record_action"><a href="<c:url value='?action=${actDeRec}&command=${commEdt}&id=${monthDemandRecord.id}' />">編集する</a></td>
+
+                    </tr>
+
+                </c:forEach>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>合計</td>
+                    <td class="total_price">${sumDemandRecord}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table>
+            <tr>
+            <td>一人分 ((固定費＋デイリーレコード合計)/2)+立替レコード</td>
+            <td>${total}</td>
+            </tr>
+        </table>
+
+
+
+
 
          <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>
         <p><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></p>
+        <p><a href="<c:url value='?action=${actDeRec}&command=${commNew}' />">立替レコードの登録</a></p>
 
     </c:param>
 </c:import>

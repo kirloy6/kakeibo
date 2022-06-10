@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.AttributeConst" %>
+<%@ page import="constants.ForwardConst" %>
+<c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
+<c:set var="commUpd" value="${ForwardConst.CMD_UPDATE.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -20,16 +23,15 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>id:${dailyRecord.id}の分割登録</p>
-<input type="text" name="store" value="${dailyRecord.store}" ><br/>
-<c:out value="${dailyRecord.price}" /><br/>
+<input type="text" name="store" value="${dailyRecord.store} <fmt:formatDate value='${dailyRecordDay}' pattern='MM-dd' /> /${dailyRecord.price}"><br/>
+<span id="total"><c:out value="${dailyRecord.price}" /></span><br/>
 
-<input type="number" name="price"  /><br/>
-
-
-<input type="number" name="price"  /><br/>
-<input type="number" name="price"  /><br/>
+<input type="number" name="price" id="price1" min="0" max="<c:out value="${dailyRecord.price}"/>"><br/>
 
 
+<input type="number" name="price2" id="price2" min="0" max="<c:out value="${dailyRecord.price}"/>"> <input type="month" name="month"><br/>
+<input type="number" name="price2" id="price3" min="0" max="<c:out value="${dailyRecord.price}"/>"> <input type="month" name="month"><br/>
+<span id="price4"></span>
 
 <br/><br/>
 
@@ -39,6 +41,6 @@
 
 
 </form>
+
 </c:param>
 </c:import>
-

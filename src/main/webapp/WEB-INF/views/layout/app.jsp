@@ -36,5 +36,25 @@
         <div id="content">${param.content}</div>
         <div id="footer">by Shuhei.</div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+
+        let total = $('#total').text();
+        $('#price1').on('input', function(){
+            let price1 = $('#price1').val();
+            console.log(price1);
+            $('#price2').val((total - price1));
+        });
+
+        $('#price2').on('input', function(){
+            let price1 = $('#price1').val();
+            let price2 = $('#price2').val();
+
+            if(total - price1 - price2 >= 0){
+                $('#price3').val((total - price1 - price2));
+            }
+        });
+
+    </script>
 </body>
 </html>

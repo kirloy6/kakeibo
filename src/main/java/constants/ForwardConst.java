@@ -9,6 +9,7 @@ public enum ForwardConst {
     ACT_AUTH("Auth"),
     ACT_REC("Record"),
     ACT_DAILYREC("DailyRecord"),
+    ACT_DEMANDREC("DemandRecord"),
 
 
     //command
@@ -36,7 +37,9 @@ public enum ForwardConst {
     FW_REC_EDIT("records/edit"),
     FW_DAILYREC_NEW("dailyRecords/new"),
     FW_DAILYREC_EDIT("dailyRecords/edit"),
-    FW_DAILYREC_SPLIT("dailyRecords/split");
+    FW_DAILYREC_SPLIT("dailyRecords/split"),
+    FW_DEMANDREC_NEW("demandRecords/new"),
+    FW_DEMANDREC_EDIT("demandRecords/edit");
 
 
     private final String text;

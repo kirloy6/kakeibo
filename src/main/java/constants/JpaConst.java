@@ -48,6 +48,17 @@ public interface JpaConst {
     String STORE_COL_ID = "id"; //id
     String STORE_COL_STORE = "store";
 
+    String TABLE_DEMANDREC ="demandrecords";
+
+    String DEREC_COL_ID = "id"; //id
+    String DEREC_COL_USER = "user_id"; //日報を作成した従業員のid
+    String DEREC_COL_REC_DATE = "record_date"; //いつの日報かを示す日付
+    String DEREC_COL_STORE = "store"; //日報のタイトル
+    String DEREC_COL_PRICE = "price"; //日報の内容
+    String DEREC_COL_CREATED_AT = "created_at"; //登録日時
+    String DEREC_COL_UPDATED_AT = "updated_at"; //更新日時
+
+
 
 
 
@@ -57,6 +68,7 @@ public interface JpaConst {
     String ENTITY_FIX ="fixedTitle";
     String ENTITY_DAILYREC ="dailyrecord";
     String ENTITY_STORE="store";
+    String ENTITY_DEMANDREC="demandrecord";
 
     //JPQL内パラメータ
     String JPQL_PARM_LOGIN_ID = "login_id"; //ログインid
@@ -104,14 +116,36 @@ public interface JpaConst {
     String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
     String Q_REC_SUM_MONTH = ENTITY_REC + ".sumMonth";
-    String Q_REC_SUM_MONTH_DEF = "SELECT SUM(r.price) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
+    String Q_REC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(r.price), 0) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
 
     String Q_DAILYREC_GET_MONTH = ENTITY_DAILYREC + ".getDailyMonth";
     String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
 
     String Q_DAILYREC_SUM_MONTH = ENTITY_DAILYREC + ".sumDailyMonth";
-    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT SUM(d.price) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(d.price), 0) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+
+    String Q_DAILYREC_GET_YEAR = ENTITY_DAILYREC + ".getDailyYear";
+    String Q_DAILYREC_GET_YEAR_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+
+    String Q_DAILYREC_SUM_YEAR = ENTITY_DAILYREC + ".sumDailyYear";
+    String Q_DAILYREC_SUM_YEAR_DEF = "SELECT COALESCE(SUM(d.price), 0) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+
+
+  //全ての日報をidの降順に取得する
+    String Q_DEMANDREC_GET_ALL = ENTITY_DEMANDREC + ".getAll";
+    String Q_DEMANDREC_GET_ALL_DEF = "SELECT de FROM DemandRecord AS de ORDER BY de.id DESC";
+
+    //指定した従業員が作成した日報を全件idの降順で取得する
+    String Q_DEMANDREC_GET_ALL_MINE = ENTITY_DEMANDREC + ".getAllMine";
+    String Q_DEMANDREC_GET_ALL_MINE_DEF = "SELECT de FROM DemandRecord AS de WHERE de.user = :" + JPQL_PARM_USER + " ORDER BY de.id DESC";
+
+    String Q_DEMANDREC_GET_MONTH = ENTITY_DEMANDREC + ".getDemandMonth";
+    String Q_DEMANDREC_GET_MONTH_DEF = "SELECT de FROM DemandRecord AS de WHERE de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
+
+    String Q_DEMANDREC_SUM_MONTH = ENTITY_DEMANDREC + ".sumDemandMonth";
+    String Q_DEMANDREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(de.price), 0) FROM DemandRecord AS de WHERE de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
+
 
 
 

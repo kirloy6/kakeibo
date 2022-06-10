@@ -20,26 +20,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name= JpaConst.TABLE_DAILYREC)
+@Table(name= JpaConst.TABLE_DEMANDREC)
 @NamedQueries({
     @NamedQuery(
-            name=JpaConst.Q_DAILYREC_GET_ALL,
-            query = JpaConst.Q_DAILYREC_GET_ALL_DEF),
+            name=JpaConst.Q_DEMANDREC_GET_ALL,
+            query = JpaConst.Q_DEMANDREC_GET_ALL_DEF),
     @NamedQuery(
-            name=JpaConst.Q_DAILYREC_GET_ALL_MINE,
-            query = JpaConst.Q_DAILYREC_GET_ALL_MINE_DEF),
+            name=JpaConst.Q_DEMANDREC_GET_ALL_MINE,
+            query = JpaConst.Q_DEMANDREC_GET_ALL_MINE_DEF),
     @NamedQuery(
-            name=JpaConst.Q_DAILYREC_GET_MONTH,
-            query = JpaConst.Q_DAILYREC_GET_MONTH_DEF),
+            name=JpaConst.Q_DEMANDREC_GET_MONTH,
+            query = JpaConst.Q_DEMANDREC_GET_MONTH_DEF),
     @NamedQuery(
-            name=JpaConst.Q_DAILYREC_SUM_MONTH,
-            query = JpaConst.Q_DAILYREC_SUM_MONTH_DEF),
-    @NamedQuery(
-            name=JpaConst.Q_DAILYREC_GET_YEAR,
-            query = JpaConst.Q_DAILYREC_GET_YEAR_DEF),
-    @NamedQuery(
-            name=JpaConst.Q_DAILYREC_SUM_YEAR,
-            query = JpaConst.Q_DAILYREC_SUM_YEAR_DEF)
+            name=JpaConst.Q_DEMANDREC_SUM_MONTH,
+            query = JpaConst.Q_DEMANDREC_SUM_MONTH_DEF)
 
 })
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
@@ -47,42 +41,42 @@ import lombok.Setter;
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
 @Entity
-public class DailyRecord {
+public class DemandRecord {
     @Id
-    @Column(name = JpaConst.DREC_COL_ID)
+    @Column(name = JpaConst.DEREC_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = JpaConst.DREC_COL_USER, nullable = false)
+    @JoinColumn(name = JpaConst.DEREC_COL_USER, nullable = false)
     private User user;
 
     /**
      * いつの日報かを示す日付
      */
-    @Column(name = JpaConst.DREC_COL_REC_DATE, nullable = false)
+    @Column(name = JpaConst.DEREC_COL_REC_DATE, nullable = false)
     private LocalDate recordDate;
 
-    @Column(name = JpaConst.DREC_COL_STORE, nullable = false)
+    @Column(name = JpaConst.DEREC_COL_STORE, nullable = false)
     private String store;
 
 
     /**
      * 金額
      */
-    @Column(name = JpaConst.DREC_COL_PRICE, nullable = false)
+    @Column(name = JpaConst.DEREC_COL_PRICE, nullable = false)
     private Integer price;
 
     /**
      * 登録日時
      */
-    @Column(name = JpaConst.DREC_COL_CREATED_AT, nullable = false)
+    @Column(name = JpaConst.DEREC_COL_CREATED_AT, nullable = false)
     private LocalDateTime createdAt;
 
     /**
      * 更新日時
      */
-    @Column(name = JpaConst.DREC_COL_UPDATED_AT, nullable = false)
+    @Column(name = JpaConst.DEREC_COL_UPDATED_AT, nullable = false)
     private LocalDateTime updatedAt;
 
 }

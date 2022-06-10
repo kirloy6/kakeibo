@@ -2,27 +2,26 @@ package actions;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
-import actions.views.DailyRecordView;
+import actions.views.DemandRecordView;
 import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
-import models.DailyRecord;
-import services.DailyRecordService;
+import models.DemandRecord;
+import services.DemandRecordService;
 
-public class DailyRecordAction extends ActionBase {
+public class DemandRecordAction extends ActionBase {
 
-    private DailyRecordService service;
+    private DemandRecordService service;
     @Override
     public void process() throws ServletException, IOException {
 
-        service=new DailyRecordService();
+        service=new DemandRecordService();
 
         invoke();
         service.close();
@@ -38,9 +37,9 @@ public class DailyRecordAction extends ActionBase {
 
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
-        List<DailyRecord> records = service.getAllPerPage(page);
+        List<DemandRecord> records = service.getAllPerPage(page);
 
-        putRequestScope(AttributeConst.DAILYRECORDS, records);
+        putRequestScope(AttributeConst.DEMANDRECORDS, records);
         putRequestScope(AttributeConst.PAGE, page);
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -60,14 +59,14 @@ public class DailyRecordAction extends ActionBase {
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
 
         //日報情報の空インスタンスに、日報の日付＝今日の日付を設定する
-        DailyRecord dr = new DailyRecord();
-        dr.setRecordDate(LocalDate.now());
-        putRequestScope(AttributeConst.DAILYRECORD, dr); //日付のみ設定済みの日報インスタンス
+        DemandRecord der = new DemandRecord();
+        der.setRecordDate(LocalDate.now());
+        putRequestScope(AttributeConst.DEMANDRECORD, der); //日付のみ設定済みの日報インスタンス
 
 
 
         //新規登録画面を表示
-        forward(ForwardConst.FW_DAILYREC_NEW);
+        forward(ForwardConst.FW_DEMANDREC_NEW);
 
     }
 
@@ -91,25 +90,25 @@ public class DailyRecordAction extends ActionBase {
             //セッションからログイン中の従業員情報を取得
             UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
             //パラメータの値をもとに情報のインスタンスを作成する
-            DailyRecordView drv = new DailyRecordView(
+            DemandRecordView derv = new DemandRecordView(
                     null,
                     uv, //ログインしている従業員を、日報作成者として登録する
                     day,
-                    getRequestParam(AttributeConst.DAILYREC_STORE),
-                    toNumber(getRequestParam(AttributeConst.DAILYREC_PRICE)),
+                    getRequestParam(AttributeConst.DEMANDREC_STORE),
+                    toNumber(getRequestParam(AttributeConst.DEMANDREC_PRICE)),
                     null,
                     null);
 
-            List<String> errors = service.create(drv);
+            List<String> errors = service.create(derv);
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.DAILYRECORD, drv);//入力された日報情報
+                putRequestScope(AttributeConst.DEMANDRECORD, derv);//入力された日報情報
                 putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
 
                 //新規登録画面を再表示
-                forward(ForwardConst.FW_DAILYREC_NEW);
+                forward(ForwardConst.FW_DEMANDREC_NEW);
 
             } else {
                 //登録中にエラーがなかった場合
@@ -121,7 +120,7 @@ public class DailyRecordAction extends ActionBase {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
             }
         }
     }
@@ -129,69 +128,31 @@ public class DailyRecordAction extends ActionBase {
     public void edit() throws ServletException, IOException {
 
         //idを条件に日報データを取得する
-        DailyRecordView drv = service.findOne(toNumber(getRequestParam(AttributeConst.DAILYREC_ID)));
+        DemandRecordView derv = service.findOne(toNumber(getRequestParam(AttributeConst.DEMANDREC_ID)));
 
         //セッションからログイン中の従業員情報を取得
         UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
 
-        if (drv == null || uv.getId() != drv.getUser().getId()) {
+        if (derv == null || uv.getId() != derv.getUser().getId()) {
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.DAILYRECORD, drv); //取得した日報データ
+            putRequestScope(AttributeConst.DEMANDRECORD, derv); //取得した日報データ
 
             //編集画面を表示
-            forward(ForwardConst.FW_DAILYREC_EDIT);
+            forward(ForwardConst.FW_DEMANDREC_EDIT);
         }
 
 
 }
 
-    public void split() throws ServletException, IOException {
 
-        //idを条件に日報データを取得する
-        DailyRecordView drv = service.findOne(toNumber(getRequestParam(AttributeConst.DAILYREC_ID)));
-
-        //セッションからログイン中の従業員情報を取得
-        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
-
-        if (drv == null || uv.getId() != drv.getUser().getId()) {
-            forward(ForwardConst.FW_ERR_UNKNOWN);
-
-        } else {
-
-            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.DAILYRECORD, drv); //取得した日報データ
-
-            //編集画面を表示
-            forward(ForwardConst.FW_DAILYREC_SPLIT);
-        }
-
-
-}
 
 
 
     public void update() throws ServletException, IOException {
-
-
-
-
-        String[] prices =request.getParameterValues("price2");
-        List<Integer> priceList = new ArrayList<>();
-                for(int j =0;j<prices.length;j++) {
-                       System.out.println(prices[j]);
-                       priceList.add(Integer.parseInt(prices[j]));
-                }
-                String[] months =request.getParameterValues("month");
-                List<LocalDate> monthList = new ArrayList<>();
-                for(int j =0;j<months.length;j++) {
-                       System.out.println(months[j]);
-                       monthList.add(toLocalDate(months[j]+"-01"));
-                }
-
 
 
 
@@ -201,40 +162,26 @@ public class DailyRecordAction extends ActionBase {
         if (checkToken()) {
 
             //idを条件に日報データを取得する
-            DailyRecordView drv = service.findOne(toNumber(getRequestParam(AttributeConst.DAILYREC_ID)));
+            DemandRecordView derv = service.findOne(toNumber(getRequestParam(AttributeConst.DEMANDREC_ID)));
 
             //入力された日報内容を設定する
-            drv.setRecordDate(toLocalDate(getRequestParam(AttributeConst.REC_DATE)));
-            drv.setStore(getRequestParam(AttributeConst.DAILYREC_STORE));
-            drv.setPrice(toNumber(getRequestParam(AttributeConst.DAILYREC_PRICE)));
+            derv.setRecordDate(toLocalDate(getRequestParam(AttributeConst.REC_DATE)));
+            derv.setStore(getRequestParam(AttributeConst.DEMANDREC_STORE));
+            derv.setPrice(toNumber(getRequestParam(AttributeConst.DEMANDREC_PRICE)));
 
-            UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
             //日報データを更新する
-            List<String> errors = service.update(drv);
-            for(int i=0;i<priceList.size();i++) {
-                DailyRecordView drv1 = new DailyRecordView(
-                        null,
-                        uv, //ログインしている従業員を、日報作成者として登録する
-                        monthList.get(i),
-                        getRequestParam(AttributeConst.DAILYREC_STORE),
-                        priceList.get(i),
-                        null,
-                        null);
-
-                List<String> errors1 = service.create(drv1);
-                errors.addAll(errors1);
-            }
+            List<String> errors = service.update(derv);
 
 
             if (errors.size() > 0) {
                 //更新中にエラーが発生した場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.DAILYRECORD, drv); //入力された日報情報
+                putRequestScope(AttributeConst.DEMANDRECORD, derv); //入力された日報情報
                 putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
 
                 //編集画面を再表示
-                forward(ForwardConst.FW_DAILYREC_EDIT);
+                forward(ForwardConst.FW_DEMANDREC_EDIT);
             } else {
                 //更新中にエラーがなかった場合
 
@@ -242,7 +189,7 @@ public class DailyRecordAction extends ActionBase {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
 
             }
         }
@@ -251,7 +198,7 @@ public class DailyRecordAction extends ActionBase {
 
     public void destroy() throws ServletException, IOException {
 
-        int id =toNumber(getRequestParam(AttributeConst.DAILYREC_ID));
+        int id =toNumber(getRequestParam(AttributeConst.DEMANDREC_ID));
         service.destroy(id);
 /*
         RecordView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REC_ID)));
@@ -265,7 +212,7 @@ public class DailyRecordAction extends ActionBase {
         putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
 
         //一覧画面にリダイレクト
-        redirect(ForwardConst.ACT_REC, ForwardConst.CMD_INDEX);
+        redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
     }
 
 
