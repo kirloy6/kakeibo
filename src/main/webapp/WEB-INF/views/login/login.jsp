@@ -18,18 +18,25 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>ログイン</h2>
+        <div class="frame">
+        <div class="box0">
+        <h2>家計簿にログイン</h2>
+        </div>
         <form method="POST" action="<c:url value='/?action=${action}&command=${command}' />">
-            <label for="${AttributeConst.USER_LOGIN_ID.getValue()}">ログインID</label><br />
-            <input type="text" name="${AttributeConst.USER_LOGIN_ID.getValue()}" value="${login_id}" />
+        <div class="box1">
+            <label for="${AttributeConst.USER_LOGIN_ID.getValue()}" id="1_text1">ログインID</label><br />
+            <input type="text" id="text1" name="${AttributeConst.USER_LOGIN_ID.getValue()}" value="${login_id}" />
             <br /><br />
-
-            <label for="${AttributeConst.USER_PASS.getValue()}">パスワード</label><br />
-            <input type="password" name="${AttributeConst.USER_PASS.getValue()}" />
+        </div>
+         <div class="box2">
+            <label for="${AttributeConst.USER_PASS.getValue()}" id="1_text2">パスワード</label><br />
+            <input type="password" id="text2" name="${AttributeConst.USER_PASS.getValue()}" />
             <br /><br />
+         </div>
 
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button type="submit">ログイン</button>
         </form>
+        </div>
     </c:param>
 </c:import>

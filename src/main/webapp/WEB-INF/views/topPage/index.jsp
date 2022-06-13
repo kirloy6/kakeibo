@@ -27,11 +27,16 @@
             </div>
         </c:if>
         <h2>家計簿へようこそ</h2>
+        <span><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></span>
+        <span><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></span>
+        <span><a href="<c:url value='?action=${actDeRec}&command=${commNew}' />">立替レコードの登録</a></span><br/><br/>
+
 
         <form method="POST" action="<c:url value='?action=${actTop}&command=${commIdx}' />">
         <input type="month" name="month" value="<fmt:formatDate value='${month}' pattern='yyyy-MM' />" />
         <button type="submit">表示</button>
         </form>
+
 
         <h3>【今月の固定費レコード　一覧】</h3>
         <table id="record_list">
@@ -66,7 +71,7 @@
             <tbody>
                 <tr>
                     <th class="record_date">日付</th>
-                    <th class="record_title">タイトル</th>
+                    <th class="record_store">ストア</th>
                     <th class="record_price">金額</th>
                     <th class="repcord_action">操作</th>
                 </tr>
@@ -91,13 +96,7 @@
                 </tr>
             </tfoot>
         </table>
-         <table>
-            <tr>
-            <td>年間トータル</td>
-            <td>${sumDailyYearRecord}</td>
-             <td>${monthRatio}%</td>
-            </tr>
-        </table>
+
          <table>
             <tr>
             <td>一人分 (固定費＋デイリーレコード合計)/2)</td>
@@ -147,9 +146,6 @@
         </canvas>
 
 
-         <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>
-        <p><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></p>
-        <p><a href="<c:url value='?action=${actDeRec}&command=${commNew}' />">立替レコードの登録</a></p>
 
         <%
 
@@ -179,7 +175,7 @@
         <script>
           window.onload = function () {
 
-            let context = document.querySelector("#sushi_circle").getContext('2d')
+            let context = document.querySelector("#circle").getContext('2d')
 
             let values = '${values}'
 
@@ -207,7 +203,8 @@
           }
 
         </script>
-        <canvas id="sushi_circle" width="500" height="500"></canvas>
-
+        <div id="canvas_wrapper">
+            <canvas id="circle" width="500" height="500"></canvas>
+        </div>
     </c:param>
 </c:import>
