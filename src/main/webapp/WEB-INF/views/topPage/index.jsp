@@ -2,6 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="models.Record" %>
+<%@ page import="models.DailyRecord" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
 
 <c:set var="actRec" value="${ForwardConst.ACT_REC.getValue()}" />
 <c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
@@ -135,13 +142,72 @@
             </tr>
         </table>
 
+        <canvas id="myDoughnutChart">
 
-
+        </canvas>
 
 
          <p><a href="<c:url value='?action=${actRec}&command=${commNew}' />">新規固定費レコードの登録</a></p>
         <p><a href="<c:url value='?action=${actDailyRec}&command=${commNew}' />">デイリーレコードの登録</a></p>
         <p><a href="<c:url value='?action=${actDeRec}&command=${commNew}' />">立替レコードの登録</a></p>
+
+        <%
+
+            Map<String, Integer> data = new HashMap<>();
+
+            @SuppressWarnings("unchecked")
+            List<Record> rs =  (List<Record>)request.getAttribute("monthRecords");
+
+            @SuppressWarnings("unchecked")
+            List<DailyRecord> drs =  (List<DailyRecord>)request.getAttribute("monthDailyRecords");
+
+            for(Record r : rs){
+                data.put(r.getTitle(), r.getPrice());
+            }
+
+
+            for(DailyRecord dr : drs){
+                data.put(dr.getStore(), dr.getPrice());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            String values = mapper.writeValueAsString(data);
+
+            pageContext.setAttribute("values", values);
+
+        %>
+        <script>
+          window.onload = function () {
+
+            let context = document.querySelector("#sushi_circle").getContext('2d')
+
+            let values = '${values}'
+
+            const json = JSON.parse(values);
+            const labels = Object.keys(json)
+            const data = Object.values(json);
+
+            console.log('json', json);
+            console.log('labels', labels);
+            console.log('data', data);
+
+            new Chart(context, {
+              type: 'doughnut',
+              data: {
+                labels: labels,
+                datasets: [{
+                  backgroundColor: ["#fa8072", "#00ff7f", "#00bfff", "#a9a9a9", "#f5f5f5"],
+                  data: data
+                }],
+              },
+              options: {
+                responsive: false,
+              }
+            });
+          }
+
+        </script>
+        <canvas id="sushi_circle" width="500" height="500"></canvas>
 
     </c:param>
 </c:import>

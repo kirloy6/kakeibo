@@ -56,5 +56,36 @@
         });
 
     </script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+    <script>
+  var ctx = document.getElementById("myDoughnutChart");
+  var myDoughnutChart= new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ["賛成", "反対", "わからない", "未回答"], //データ項目のラベル
+      datasets: [{
+          backgroundColor: [
+              "#c97586",
+              "#bbbcde",
+              "#93b881",
+              "#e6b422"
+          ],
+          data: [45, 32, 18, 5] //グラフのデータ
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        //グラフタイトル
+        text: 'デイリーレコード'
+      }
+    }
+  });
+</script>
+
+
+
+
 </body>
 </html>
