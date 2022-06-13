@@ -29,11 +29,13 @@
                 <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">ユーザー管理</a>&nbsp;
                 <a href="<c:url value='?action=${actRec}&command=${commIdx}' />">レコード管理</a>&nbsp;
             </div>
+            <c:if test="${sessionScope.login_user != null}">
             <div id="user_name">
                 <c:out value="${sessionScope.login_user.name}" />
                     &nbsp;さん&nbsp;&nbsp;&nbsp;
                 <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
+            </c:if>
         </div>
         <div id="content">${param.content}</div>
         <div id="footer">by Shuhei.</div>
