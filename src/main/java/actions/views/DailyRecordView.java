@@ -24,7 +24,6 @@ public class DailyRecordView {
 
         private String store;
 
-
         private Integer price;
 
         private LocalDateTime createdAt;

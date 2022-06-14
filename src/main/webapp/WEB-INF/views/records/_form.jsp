@@ -21,14 +21,28 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>固定費</p>
+<input list="titleList" id="Id" name="title" />
+<datalist id="titleList">
 <select name="title">
    <c:forEach var="fixedTitle" items="${fixedTitles}">
          <option value="${fixedTitle.title}">${fixedTitle.title}</option>
     </c:forEach>
  </select>
+  </datalist>
+ <script>
+'use strcit';
+document.getElementById('Id').addEventListener('input', function handleInput (event) {
+  console.log(event.target.value);
+}, false);
+</script>
 
 
-<input type="number" name="price" value="${record.price}" />
+
+<input type="number" name="price"  min="0"
+    <c:if test="${dailyRecord.price == -2147483648}" >
+         <c:out value="" />
+    </c:if>
+/>
 <br/><br/>
 
 <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />

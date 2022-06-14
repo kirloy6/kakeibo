@@ -17,7 +17,11 @@ public enum MessageConst {
     E_NONAME("氏名を入力してください。"),
     E_NOPASSWORD("パスワードを入力してください。"),
     E_NOUSER_LOGIN_ID("ログインidを入力してください。"),
-    E_USER_LOGIN_ID_EXIST("入力されたログインIDの情報は既に存在しています。");
+    E_USER_LOGIN_ID_EXIST("入力されたログインIDの情報は既に存在しています。"),
+    E_NOSTORE("ストアを入力してください。"),
+    E_NOTITLE("項目を入力してください。"),
+    E_NOPRICE("金額を正しく入力してください。"),
+    E_NOTIME("日付を入力してください。");
 
 
     private final String text;

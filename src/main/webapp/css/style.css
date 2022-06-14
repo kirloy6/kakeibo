@@ -2,6 +2,10 @@
 
 body {
     color: #333333;
+    margin:0;
+    display:flex;
+    flex-flow:column;
+
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
 }
 
@@ -53,8 +57,10 @@ table, tr, th, td {
 }
 
 table {
-    width: 100%;
+    width: 85%;
     table-layout: fixed;
+    margin:auto;
+
 }
 
 th {
@@ -72,9 +78,9 @@ button {
     padding: 5px 10px;
 }
 
-#footer {
-    text-align: center;
-}
+
+
+
 #flush_success{
     width:100%;
     padding-top:28px;
@@ -133,6 +139,14 @@ select {
 #header a {
     color: #eeeeee;
 }
+#footer{
+    position:fixed;
+    bottom:0;
+    width: 100%;
+    text-align:center;
+
+
+}
 
 h1 a {
     color: #eeeeee;
@@ -170,9 +184,11 @@ table#record_list th {
 }
 
 .frame{
-    width: 80%; /*幅*/
-    margin: 250px auto; /*上の位置と中央寄せ*/
-    max-width: 500px; /*最大の幅*/
+   position: absolute;
+   top:50%;
+   left:50%;
+
+   transform:translate(-50%,-50%);
 }
 
 .box0{

@@ -38,7 +38,11 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 
 
 
-<input type="number" name="price" value="${demandRecord.price}" />
+<input type="number" name="price"  min="0"
+    <c:if test="${dailyRecord.price == -2147483648}" >
+         <c:out value="" />
+    </c:if>
+/>
 <br/><br/>
 
 <input type="hidden" name="${AttributeConst.DEMANDREC_ID.getValue()}" value="${demandRecord.id}" />

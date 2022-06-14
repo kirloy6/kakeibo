@@ -26,8 +26,10 @@
         <div id="header">
             <div id="header_menu">
                 <h1><a href="<c:url value='/?action=${actTop}&command=${commIdx}' />">家計簿</a></h1>&nbsp;&nbsp;&nbsp;
+                <c:if test="${sessionScope.login_user != null}">
                 <a href="<c:url value='?action=${actUser}&command=${commIdx}' />">ユーザー管理</a>&nbsp;
                 <a href="<c:url value='?action=${actRec}&command=${commIdx}' />">レコード管理</a>&nbsp;
+                </c:if>
             </div>
             <c:if test="${sessionScope.login_user != null}">
             <div id="user_name">
