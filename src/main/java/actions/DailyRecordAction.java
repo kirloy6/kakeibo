@@ -183,13 +183,21 @@ public class DailyRecordAction extends ActionBase {
         List<Integer> priceList = new ArrayList<>();
                 for(int j =0;j<prices.length;j++) {
                        System.out.println(prices[j]);
+                       if(prices[j]==null || prices[j].equals("")) {
+                           prices[j] ="1";
+                       } else {
                        priceList.add(Integer.parseInt(prices[j]));
                 }
-                String[] months =request.getParameterValues("month");
+                }
+                String[] months =  request.getParameterValues("month");
                 List<LocalDate> monthList = new ArrayList<>();
                 for(int j =0;j<months.length;j++) {
                        System.out.println(months[j]);
+                       if(months[j] == null || months[j].equals("")) {
+                           months[j] ="2022-01";
+                       } else {
                        monthList.add(toLocalDate(months[j]+"-01"));
+                }
                 }
 
 
