@@ -60,7 +60,7 @@ public class DailyRecordValidator {
         return "";
     }
     private static String validateTime(LocalDate recordDate) {
-        if(recordDate == null || recordDate.equals("")) {
+        if(recordDate == null || recordDate.equals("") || recordDate.isBefore(LocalDate.now())) {
             return MessageConst.E_NOTIME.getMessage();
         }
 

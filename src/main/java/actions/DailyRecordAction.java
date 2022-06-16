@@ -194,7 +194,8 @@ public class DailyRecordAction extends ActionBase {
                 for(int j =0;j<months.length;j++) {
                        System.out.println(months[j]);
                        if(months[j] == null || months[j].equals("")) {
-                           months[j] ="2022-01";
+                           months[j] = "0000-01";
+                           monthList.add(toLocalDate(months[j]+"-01"));
                        } else {
                        monthList.add(toLocalDate(months[j]+"-01"));
                 }
