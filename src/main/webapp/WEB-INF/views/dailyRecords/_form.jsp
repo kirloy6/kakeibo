@@ -47,5 +47,5 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 
 <input type="hidden" name="${AttributeConst.DAILYREC_ID.getValue()}" value="${dailyRecord.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-<button type="submit">投稿</button><br/><br/>
+<button type="submit">投稿</button>
 

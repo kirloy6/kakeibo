@@ -12,13 +12,13 @@
     <c:param name="content">
 
         <h2>レコード 編集ページ</h2>
-        <form method="POST" action="<c:url value='?action=${actDailyRec}&command=${commUpd}' />">
+        <form style="display:inline;" method="POST" action="<c:url value='?action=${actDailyRec}&command=${commUpd}' />">
             <c:import url="_form.jsp" />
         </form>
+        &nbsp;&nbsp;&nbsp;
 
 
-
-        <form method="POST"
+        <form style="display:inline;" method="POST"
             action="<c:url value='?action=${actDailyRec}&command=${commDest}' />">
             <input type="hidden" name="${AttributeConst.DAILYREC_ID.getValue()}" value="${dailyRecord.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />

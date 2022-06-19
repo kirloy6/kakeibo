@@ -11,16 +11,17 @@
     <c:param name="content">
 
         <h2>レコード 編集ページ</h2>
-        <form method="POST" action="<c:url value='?action=${actRec}&command=${commUpd}' />">
+        <form style="display:inline;"  method="POST" action="<c:url value='?action=${actRec}&command=${commUpd}' />">
             <c:import url="_form.jsp" />
         </form>
+         &nbsp;&nbsp;&nbsp;
 
 
-        <form method="POST"
+        <form style="display:inline;"  method="POST"
             action="<c:url value='?action=${actRec}&command=${commDest}' />">
             <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-            <button type="submit" >削除</button>
+            <button  type="submit" >削除</button>
         </form>
 
 
