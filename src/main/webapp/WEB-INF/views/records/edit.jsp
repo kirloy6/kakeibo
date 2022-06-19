@@ -17,12 +17,19 @@
          &nbsp;&nbsp;&nbsp;
 
 
-        <form style="display:inline;"  method="POST"
+        <form style="display:inline;"  method="POST" onclick="confirmDestroy()"
             action="<c:url value='?action=${actRec}&command=${commDest}' />">
             <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button  type="submit" >削除</button>
         </form>
+        <script>
+                    function confirmDestroy() {
+                        if(confirm("本当に削除してよろしいですか？")) {
+                            document.forms[1].submit();
+                        }
+                    }
+                </script>
 
 
         <p>

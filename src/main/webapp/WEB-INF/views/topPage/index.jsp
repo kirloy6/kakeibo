@@ -12,7 +12,7 @@
 
 <c:set var="actRec" value="${ForwardConst.ACT_REC.getValue()}" />
 <c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
-<c:set var="actDeRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
+<c:set var="actDeRec" value="${ForwardConst.ACT_DEMANDREC.getValue()}" />
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />

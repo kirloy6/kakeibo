@@ -11,18 +11,26 @@
     <c:param name="content">
 
         <h2>レコード 編集ページ</h2>
-        <form method="POST" action="<c:url value='?action=${actDeRec}&command=${commUpd}' />">
+        <form style="display:inline;" method="POST" action="<c:url value='?action=${actDeRec}&command=${commUpd}' />">
             <c:import url="_form.jsp" />
         </form>
+        &nbsp;&nbsp;&nbsp;
 
 
 
-        <form method="POST"
+        <form style="display:inline;" method="POST" onclick="confirmDestroy()"
             action="<c:url value='?action=${actDeRec}&command=${commDest}' />">
             <input type="hidden" name="${AttributeConst.DEMANDREC_ID.getValue()}" value="${demandRecord.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button type="submit" >削除</button>
         </form>
+         <script>
+                    function confirmDestroy() {
+                        if(confirm("本当に削除してよろしいですか？")) {
+                            document.forms[1].submit();
+                        }
+                    }
+                </script>
 
 
 
