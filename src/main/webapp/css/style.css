@@ -74,8 +74,8 @@ td {
 }
 
 button {
-    font-size: 14px;
-    padding: 5px 10px;
+    font-size: 150px;
+    display:inline-block;
 }
 
 
@@ -248,4 +248,3 @@ table#record_list th {
     width:640px;
     margin:0 auto;
 }
-

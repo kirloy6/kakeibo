@@ -9,6 +9,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commDest" value="${ForwardConst.CMD_DESTROY.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -36,8 +37,10 @@
                         <td class="record_title">${record.title}</td>
                         <td class="record_price">${record.price}</td>
                          <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
+                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commDest}&id=${record.id}' />">削除</a></td>
                         </tr>
                         </c:forEach>
+
 
 
 

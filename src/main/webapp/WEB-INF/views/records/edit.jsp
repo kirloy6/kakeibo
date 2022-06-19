@@ -16,14 +16,12 @@
         </form>
 
 
-
         <form method="POST"
             action="<c:url value='?action=${actRec}&command=${commDest}' />">
             <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button type="submit" >削除</button>
         </form>
-
 
 
         <p>
