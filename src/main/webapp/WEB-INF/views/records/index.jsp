@@ -37,7 +37,6 @@
                         <td class="record_title">${record.title}</td>
                         <td class="record_price">${record.price}</td>
                          <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commEdt}&id=${record.id}' />">編集する</a></td>
-                         <td class="record_action"><a href="<c:url value='?action=${actRec}&command=${commDest}&id=${record.id}' />">削除</a></td>
                         </tr>
                         </c:forEach>
 
