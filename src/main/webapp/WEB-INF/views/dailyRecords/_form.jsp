@@ -21,7 +21,7 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>デイリーレコード</p>
-<input list="storeList" id="Id" name="store" />
+<input list="storeList" id="Id" name="store" value="${dailyRecord.store}"/>
 <datalist id="storeList">
 <select name="store">
    <c:forEach var="store" items="${stores}">
@@ -38,9 +38,9 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 
 
 
-<input type="number" name="price"  min="0"
+<input type="number" name="price"  min="0" value="${dailyRecord.price}"
     <c:if test="${dailyRecord.price == -2147483648}" >
-         <c:out value="" />
+         <c:out value= "" />
     </c:if>
 />
 <br/><br/>

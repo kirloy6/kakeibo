@@ -51,7 +51,7 @@ public class TopAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         String time =request.getParameter("month");
-        if(time == null) {
+        if(time == null || time.equals("")) {
             LocalDate date =LocalDate.now();
             DateTimeFormatter   formatter = DateTimeFormatter.ofPattern("yyyy-MM");
             time= formatter.format(date);
@@ -63,7 +63,7 @@ public class TopAction extends ActionBase {
 
 
         String start =time + "-01";
-        String end = time +"-30";
+        String end = time +"-28";
 
         String startYear =timeYear + "-01-01";
         String endYear = timeYear +"-12-31";

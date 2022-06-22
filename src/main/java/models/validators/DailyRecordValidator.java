@@ -52,7 +52,7 @@ public class DailyRecordValidator {
      * @return エラーメッセージ
      */
     private static String validatePrice(Integer price) {
-        if (price < 0) {
+        if (price == null|| price.equals("")|| price < 0) {
             return MessageConst.E_NOPRICE.getMessage();
         }
 
@@ -60,11 +60,45 @@ public class DailyRecordValidator {
         return "";
     }
     private static String validateTime(LocalDate recordDate) {
-        if(recordDate == null || recordDate.equals("") || recordDate.isBefore(LocalDate.now())) {
+        if(recordDate == null || recordDate.equals("") ) {
             return MessageConst.E_NOTIME.getMessage();
         }
 
           return "";
       }
 
+
+
+public static List<String> validateUp(DailyRecordView drv) {
+    List<String> errors = new ArrayList<String>();
+
+    String storeError = validateStore(drv.getStore());
+    if (!storeError.equals("")) {
+        errors.add(storeError);
+    }
+
+    //内容のチェック
+    String priceError = validatePrice(drv.getPrice());
+    if (!priceError.equals("")) {
+        errors.add(priceError);
+    }
+    String timeError = validateUpTime(drv.getRecordDate());
+    if(!timeError.equals("")) {
+        errors.add(timeError);
+    }
+
+    return errors;
 }
+
+
+
+private static String validateUpTime(LocalDate recordDate) {
+    if(recordDate == null || recordDate.equals("") || recordDate.isBefore(LocalDate.now())) {
+        return MessageConst.E_NOTIME.getMessage();
+    }
+
+      return "";
+  }
+
+}
+

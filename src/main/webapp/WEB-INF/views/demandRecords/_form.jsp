@@ -21,7 +21,7 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>立替レコード</p>
-<input list="storeList" id="Id" name="store" />
+<input list="storeList" id="Id" name="store" value="${demandRecord.store}" />
 <datalist id="storeList">
 <select name="store">
    <c:forEach var="store" items="${stores}">
@@ -38,8 +38,8 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 
 
 
-<input type="number" name="price"  min="0"
-    <c:if test="${dailyRecord.price == -2147483648}" >
+<input type="number" name="price"  min="0" value="${demandRecord.price}"
+    <c:if test="${demandRecord.price == -2147483648}" >
          <c:out value="" />
     </c:if>
 />

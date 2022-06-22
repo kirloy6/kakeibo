@@ -60,6 +60,19 @@ public class DailyRecordService extends ServiceBase {
         return errors;
     }
 
+    public List<String> createUp(DailyRecordView drv) {
+        List<String> errors = DailyRecordValidator.validateUp(drv);
+        if (errors.size() == 0) {
+            LocalDateTime ldt = LocalDateTime.now();
+            drv.setCreatedAt(ldt);
+            drv.setUpdatedAt(ldt);
+            createInternal(drv);
+        }
+
+        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
+
     /**
      * 画面から入力された日報の登録内容を元に、日報データを更新する
      * @param rv 日報の更新内容

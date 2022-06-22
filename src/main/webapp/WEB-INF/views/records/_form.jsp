@@ -21,7 +21,7 @@
 <c:out value="${sessionScope.login_user.name}" />
 <br /><br />
 <p>固定費</p>
-<input list="titleList" id="Id" name="title" />
+<input list="titleList" id="Id" name="title" value="${record.title}" />
 <datalist id="titleList">
 <select name="title">
    <c:forEach var="fixedTitle" items="${fixedTitles}">
@@ -37,12 +37,11 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 </script>
 
 
-
-<input type="number" name="price"  min="0"
-    <c:if test="${dailyRecord.price == -2147483648}" >
-         <c:out value="" />
+<input type="number" name="price"  min="0" value="${record.price}">
+    <c:if test="${record.price == -2147483648}">
+         <c:out value=""/>
     </c:if>
-/>
+
 <br/><br/>
 
 <input type="hidden" name="${AttributeConst.REC_ID.getValue()}" value="${record.id}" />
