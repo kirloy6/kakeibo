@@ -5,12 +5,13 @@
 <%@ page import="constants.ForwardConst" %>
 <c:set var="actDailyRec" value="${ForwardConst.ACT_DAILYREC.getValue()}" />
 <c:set var="commUpd" value="${ForwardConst.CMD_UPDATE.getValue()}" />
+<c:set var="commUpdSplit" value="${ForwardConst.CMD_UPDATESPLIT.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
 
         <h2>レコード 分割ページ</h2>
-        <form method="POST" action="<c:url value='?action=${actDailyRec}&command=${commUpd}' />">
+        <form method="POST" action="<c:url value='?action=${actDailyRec}&command=${commUpdSplit}' />">
 
 
 
