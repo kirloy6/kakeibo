@@ -192,12 +192,15 @@
               data: {
                 labels: labels,
                 datasets: [{
-                  backgroundColor: ["#fa8072", "#00ff7f", "#00bfff", "#a9a8a9", "#f5f1f5","#a9a9a8", "#aee1ae","#fa8072"],
                   data: data
                 }],
               },
               options: {
-                responsive: false,
+                  plugins: {
+                      colorschemes: {
+                          scheme: 'brewer.Paired12'
+                      }
+                  }
               }
             });
           }
