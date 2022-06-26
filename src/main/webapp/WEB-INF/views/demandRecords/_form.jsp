@@ -38,10 +38,11 @@ document.getElementById('Id').addEventListener('input', function handleInput (ev
 
 
 
-<input type="number" name="price"  min="0" value="${demandRecord.price}"
+<input type="number" name="price"  min="0"
     <c:if test="${demandRecord.price == -2147483648}" >
-         <c:out value="" />
+         value=""
     </c:if>
+    value="${demandRecord.price}"
 />
 <br/><br/>
 
