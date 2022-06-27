@@ -6,18 +6,19 @@ import java.util.List;
 
 import actions.views.RecordConverter;
 import actions.views.RecordView;
+import actions.views.UserConverter;
+import actions.views.UserView;
 import constants.JpaConst;
 import models.FixedTitle;
 import models.Record;
-import models.User;
 import models.validators.RecordValidator;
 
 public class RecordService extends ServiceBase {
 
-    public List<Record> getMinePerPage(User user, int page) {
+    public List<Record> getMinePerPage(UserView user, int page) {
 
         List<Record> records = em.createNamedQuery(JpaConst.Q_REC_GET_ALL_MINE, Record.class)
-                .setParameter(JpaConst.JPQL_PARM_USER, user)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();

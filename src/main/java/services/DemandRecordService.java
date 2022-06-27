@@ -6,18 +6,19 @@ import java.util.List;
 
 import actions.views.DemandRecordConverter;
 import actions.views.DemandRecordView;
+import actions.views.UserConverter;
+import actions.views.UserView;
 import constants.JpaConst;
 import models.DemandRecord;
 import models.Store;
-import models.User;
 import models.validators.DemandRecordValidator;
 
 public class DemandRecordService extends ServiceBase {
 
-    public List<DemandRecord> getMinePerPage(User user, int page) {
+    public List<DemandRecord> getMinePerPage(UserView user, int page) {
 
         List<DemandRecord> demandrecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_GET_ALL_MINE, DemandRecord.class)
-                .setParameter(JpaConst.JPQL_PARM_USER, user)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();

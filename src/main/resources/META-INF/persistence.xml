@@ -13,10 +13,10 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/kakeibo?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_5e14cf3a994c2ff?reconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8"/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
-            <property name="javax.persistence.jdbc.user" value="kakeiuser"/>
-            <property name="javax.persistence.jdbc.password" value="kakeipass"/>
+            <property name="javax.persistence.jdbc.user" value="b58a6c2d516e80"/>
+            <property name="javax.persistence.jdbc.password" value="0eac6b9f"/>
         </properties>
    </persistence-unit>
 </persistence>

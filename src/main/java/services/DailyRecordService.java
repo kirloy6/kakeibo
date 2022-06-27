@@ -6,18 +6,19 @@ import java.util.List;
 
 import actions.views.DailyRecordConverter;
 import actions.views.DailyRecordView;
+import actions.views.UserConverter;
+import actions.views.UserView;
 import constants.JpaConst;
 import models.DailyRecord;
 import models.Store;
-import models.User;
 import models.validators.DailyRecordValidator;
 
 public class DailyRecordService extends ServiceBase {
 
-    public List<DailyRecord> getMinePerPage(User user, int page) {
+    public List<DailyRecord> getMinePerPage(UserView user, int page) {
 
         List<DailyRecord> dailyrecords = em.createNamedQuery(JpaConst.Q_DAILYREC_GET_ALL_MINE, DailyRecord.class)
-                .setParameter(JpaConst.JPQL_PARM_USER, user)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();

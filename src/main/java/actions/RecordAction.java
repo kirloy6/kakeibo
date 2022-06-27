@@ -48,14 +48,13 @@ public class RecordAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
 
+        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
 
 
-
-        //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
-        List<Record> records = service.getAllPerPage(page);
-        List<DailyRecord> dailyRecords = drservice.getAllPerPage(page);
-        List<DemandRecord> demandRecords = derservice.getAllPerPage(page);
+        List<Record> records = service.getMinePerPage(uv,page);
+        List<DailyRecord> dailyRecords = drservice.getMinePerPage(uv,page);
+        List<DemandRecord> demandRecords = derservice.getMinePerPage(uv,page);
 
         putRequestScope(AttributeConst.DEMANDRECORDS, demandRecords);
         putRequestScope(AttributeConst.DAILYRECORDS, dailyRecords);
