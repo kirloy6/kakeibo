@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import models.DailyRecord;
@@ -50,6 +51,8 @@ public class TopAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
+        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USER);
+
         String time =request.getParameter("month");
         if(time == null || time.equals("")) {
             LocalDate date =LocalDate.now();
@@ -71,17 +74,17 @@ public class TopAction extends ActionBase {
         LocalDate endDay = LocalDate.parse(end).withDayOfMonth(1).plusMonths(1).minusDays(1);
 
 
-        List<Record> monthRecords = service.getMonthData(toLocalDate(start),endDay);
-        long sumRecord= service.sumMonth(toLocalDate(start),endDay);
+        List<Record> monthRecords = service.getMonthData(uv,toLocalDate(start),endDay);
+        long sumRecord= service.sumMonth(uv,toLocalDate(start),endDay);
 
 
-        List<DailyRecord> monthDailyRecords = dservice.getDailyMonth(toLocalDate(start),endDay);
-        long sumDailyRecord= dservice.sumDailyMonth(toLocalDate(start),endDay);
+        List<DailyRecord> monthDailyRecords = dservice.getDailyMonth(uv,toLocalDate(start),endDay);
+        long sumDailyRecord= dservice.sumDailyMonth(uv,toLocalDate(start),endDay);
 
         long sumDailyYearRecord= dservice.sumDailyYear(toLocalDate(startYear),toLocalDate(endYear));
 
-        List<DemandRecord> monthDemandRecords = deservice.getDailyMonth(toLocalDate(start),endDay);
-        long sumDemandRecord= deservice.sumDemandMonth(toLocalDate(start),endDay);
+        List<DemandRecord> monthDemandRecords = deservice.getDailyMonth(uv,toLocalDate(start),endDay);
+        long sumDemandRecord= deservice.sumDemandMonth(uv,toLocalDate(start),endDay);
 
         long totalOne =(sumRecord+sumDailyRecord)/2;
         long total =((sumRecord+sumDailyRecord)/2)+sumDemandRecord;

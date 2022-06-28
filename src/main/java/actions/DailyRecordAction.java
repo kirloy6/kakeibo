@@ -35,7 +35,6 @@ public class DailyRecordAction extends ActionBase {
      * @throws IOException
      */
     public void index() throws ServletException, IOException {
-
         //指定されたページ数の一覧画面に表示する日報データを取得
         int page = getPage();
         List<DailyRecord> records = service.getAllPerPage(page);

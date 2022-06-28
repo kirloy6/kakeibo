@@ -113,20 +113,20 @@ public interface JpaConst {
     String Q_STORE_GET_ALL_DEF = "SELECT s FROM Store AS s ORDER BY s.id ASC";
 
     String Q_REC_GET_MONTH = ENTITY_REC + ".getMonth";
-    String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
+    String Q_REC_GET_MONTH_DEF = "SELECT r FROM Record AS r WHERE r.user = :" + JPQL_PARM_USER + " AND r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
     String Q_REC_SUM_MONTH = ENTITY_REC + ".sumMonth";
-    String Q_REC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(r.price), 0) FROM Record AS r WHERE r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
+    String Q_REC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(r.price), 0) FROM Record AS r WHERE r.user = :" + JPQL_PARM_USER + " AND r.recordDate >= :start AND r.recordDate <= :end ORDER BY r.recordDate ASC";
 
 
     String Q_DAILYREC_GET_MONTH = ENTITY_DAILYREC + ".getDailyMonth";
-    String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+    String Q_DAILYREC_GET_MONTH_DEF = "SELECT d FROM DailyRecord AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.recordDate >= :start AND d.recordDate <= :end  ORDER BY d.recordDate ASC";
 
     String Q_DAILYREC_SUM_MONTH = ENTITY_DAILYREC + ".sumDailyMonth";
-    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(d.price), 0) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+    String Q_DAILYREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(d.price), 0) FROM DailyRecord AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
 
     String Q_DAILYREC_GET_YEAR = ENTITY_DAILYREC + ".getDailyYear";
-    String Q_DAILYREC_GET_YEAR_DEF = "SELECT d FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
+    String Q_DAILYREC_GET_YEAR_DEF = "SELECT d FROM DailyRecord AS d  WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
 
     String Q_DAILYREC_SUM_YEAR = ENTITY_DAILYREC + ".sumDailyYear";
     String Q_DAILYREC_SUM_YEAR_DEF = "SELECT COALESCE(SUM(d.price), 0) FROM DailyRecord AS d WHERE d.recordDate >= :start AND d.recordDate <= :end ORDER BY d.recordDate ASC";
@@ -141,10 +141,10 @@ public interface JpaConst {
     String Q_DEMANDREC_GET_ALL_MINE_DEF = "SELECT de FROM DemandRecord AS de WHERE de.user = :" + JPQL_PARM_USER + " ORDER BY de.id DESC";
 
     String Q_DEMANDREC_GET_MONTH = ENTITY_DEMANDREC + ".getDemandMonth";
-    String Q_DEMANDREC_GET_MONTH_DEF = "SELECT de FROM DemandRecord AS de WHERE de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
+    String Q_DEMANDREC_GET_MONTH_DEF = "SELECT de FROM DemandRecord AS de WHERE de.user = :" + JPQL_PARM_USER + " AND de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
 
     String Q_DEMANDREC_SUM_MONTH = ENTITY_DEMANDREC + ".sumDemandMonth";
-    String Q_DEMANDREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(de.price), 0) FROM DemandRecord AS de WHERE de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
+    String Q_DEMANDREC_SUM_MONTH_DEF = "SELECT COALESCE(SUM(de.price), 0) FROM DemandRecord AS de WHERE de.user = :" + JPQL_PARM_USER + " AND de.recordDate >= :start AND de.recordDate <= :end ORDER BY de.recordDate ASC";
 
 
 

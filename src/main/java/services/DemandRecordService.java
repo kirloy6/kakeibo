@@ -136,22 +136,24 @@ public class DemandRecordService extends ServiceBase {
         em.close();
     }
 
-    public List<DemandRecord> getDailyMonth(LocalDate start,LocalDate end) {
+    public List<DemandRecord> getDailyMonth(UserView user,LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
         List<DemandRecord> monthDemandRecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_GET_MONTH, DemandRecord.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getResultList();
         return monthDemandRecords;
     }
 
-    public long sumDemandMonth(LocalDate start,LocalDate end) {
+    public long sumDemandMonth(UserView user,LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
         long sumDemandRecords = em.createNamedQuery(JpaConst.Q_DEMANDREC_SUM_MONTH, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getSingleResult();

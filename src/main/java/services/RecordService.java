@@ -137,22 +137,24 @@ public class RecordService extends ServiceBase {
     }
 
 
-    public List<Record> getMonthData(LocalDate start,LocalDate end) {
+    public List<Record> getMonthData(UserView user, LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
         List<Record> monthRecords = em.createNamedQuery(JpaConst.Q_REC_GET_MONTH, Record.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getResultList();
         return monthRecords;
     }
 
-    public long sumMonth(LocalDate start,LocalDate end) {
+    public long sumMonth(UserView user, LocalDate start,LocalDate end) {
 
         LocalDate ldt = LocalDate.now();
 
         long sumRecords = em.createNamedQuery(JpaConst.Q_REC_SUM_MONTH, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .setParameter("start" ,start)
                 .setParameter("end", end)
                 .getSingleResult();
